@@ -1,0 +1,30 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{l+m+mf}{1.}\PYG{n}{exgcd}
+\PYG{k+kt}{void} \PYG{n}{exgcd}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{a}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{b}\PYG{p}{,}\PYG{k+kt}{int} \PYG{o}{\PYGZam{}}\PYG{n}{d}\PYG{p}{,}\PYG{k+kt}{int} \PYG{o}{\PYGZam{}}\PYG{n}{x}\PYG{p}{,}\PYG{k+kt}{int} \PYG{o}{\PYGZam{}}\PYG{n}{y}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{b}\PYG{o}{==}\PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{x} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{y} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{d}\PYG{o}{=}\PYG{n}{a}\PYG{p}{;}
+        \PYG{k}{return} \PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{exgcd}\PYG{p}{(}\PYG{n}{b}\PYG{p}{,}\PYG{n}{a}\PYG{o}{\PYGZpc{}}\PYG{n}{b}\PYG{p}{,}\PYG{n}{d}\PYG{p}{,}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{);}
+    \PYG{k+kt}{int} \PYG{n}{t} \PYG{o}{=} \PYG{n}{x}\PYG{p}{;}
+    \PYG{n}{x} \PYG{o}{=} \PYG{n}{y}\PYG{p}{;}
+    \PYG{n}{y} \PYG{o}{=} \PYG{n}{t} \PYG{o}{\PYGZhy{}} \PYG{p}{(} \PYG{n}{a} \PYG{o}{/} \PYG{n}{b} \PYG{p}{)} \PYG{o}{*} \PYG{n}{y}\PYG{p}{;}
+    \PYG{k}{return} \PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{int} \PYG{n}{inv}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{a}\PYG{p}{)\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{,}\PYG{n}{d}\PYG{p}{;}
+    \PYG{n}{exgcd}\PYG{p}{(}\PYG{n}{a}\PYG{p}{,}\PYG{n}{MOD}\PYG{p}{,}\PYG{n}{d}\PYG{p}{,}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{);}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{d}\PYG{o}{==}\PYG{l+m+mi}{1}\PYG{p}{)}  \PYG{k}{return} \PYG{p}{(}\PYG{n}{x}\PYG{o}{\PYGZpc{}}\PYG{n}{MOD}\PYG{o}{+}\PYG{n}{MOD}\PYG{p}{)}\PYG{o}{\PYGZpc{}}\PYG{n}{MOD}\PYG{p}{;}   \PYG{c+c1}{//返回最小正整数解}
+    \PYG{k}{return} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}  \PYG{c+c1}{//不存在逆元}
+\PYG{p}{\PYGZcb{}}
+\PYG{l+m+mf}{2.F}\PYG{n}{emat}
+\PYG{k+kt}{int} \PYG{n}{qmod}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{a}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{b}\PYG{p}{)\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{res} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(;}\PYG{n}{b}\PYG{p}{;}\PYG{n}{b}\PYG{o}{\PYGZgt{}\PYGZgt{}=}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{a}\PYG{o}{=}\PYG{n}{a}\PYG{o}{*}\PYG{n}{a}\PYG{o}{\PYGZpc{}}\PYG{n}{MOD}\PYG{p}{)}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{b}\PYG{o}{\PYGZam{}}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{n}{res}\PYG{o}{=}\PYG{n}{res}\PYG{o}{*}\PYG{n}{a}\PYG{o}{\PYGZpc{}}\PYG{n}{MOD}\PYG{p}{;}
+    \PYG{k}{return} \PYG{n}{res}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{int} \PYG{n}{inv}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{a}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{qmod}\PYG{p}{(}\PYG{n}{a}\PYG{p}{,}\PYG{n}{MOD}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/***************************************************************}
+\PYG{c+cm}{dfs序}
+
+\PYG{c+cm}{其实就是从根节点进行搜索， }
+\PYG{c+cm}{然后向下dfs遍历树，依次进行编号， }
+\PYG{c+cm}{同时能保证子树的编号一定大于父节点的编号，}
+
+\PYG{c+cm}{同时借用两个数组，L[\PYGZus{}],R[\PYGZus{}] }
+\PYG{c+cm}{分别表示这个节点u的子树的节点编号在(L[u],R[u]),开区间内。}
+
+\PYG{c+cm}{这样在进行对子树进行的操作的时候可以借助数据结构对区间进行查找，}
+\PYG{c+cm}{***************************************************************/}
+\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int} \PYG{o}{\PYGZgt{}}\PYG{n}{G}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{k+kt}{int} \PYG{n}{cnt} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{k+kt}{void} \PYG{n+nf}{dfs}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{f}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{L}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]}\PYG{o}{=}\PYG{n}{cnt}\PYG{o}{++}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{G}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{size}\PYG{p}{();}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)}\PYG{k}{if}\PYG{p}{(}\PYG{n}{G}\PYG{p}{[}\PYG{n}{u}\PYG{p}{][}\PYG{n}{i}\PYG{p}{]}\PYG{o}{!=}\PYG{n}{f}\PYG{p}{)}
+        \PYG{n}{dfs}\PYG{p}{(}\PYG{n}{G}\PYG{p}{[}\PYG{n}{u}\PYG{p}{][}\PYG{n}{i}\PYG{p}{]);}
+    \PYG{n}{R}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]}\PYG{o}{=}\PYG{n}{cnt}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

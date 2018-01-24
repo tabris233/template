@@ -1,0 +1,23 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/**********************************************************}
+\PYG{c+cm}{第二类Stirling数}
+\PYG{c+cm}{定理：第二类Stirling数S(p,k)计数的是把p元素集合划分到k个不可区分的盒子里且没有空盒子的划分个数。}
+\PYG{c+cm}{递推公式有：}
+\PYG{c+cm}{S(p,p)=1 (p\PYGZgt{}=0)}
+\PYG{c+cm}{S(p,0)=0 (p\PYGZgt{}=1)}
+\PYG{c+cm}{S(p,k)=k*S(p\PYGZhy{}1,k)+S(p\PYGZhy{}1,k\PYGZhy{}1)  (1\PYGZlt{}=k\PYGZlt{}=p\PYGZhy{}1)}
+\PYG{c+cm}{**********************************************************/}
+\PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{s}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{][}\PYG{n}{maxn}\PYG{p}{];}\PYG{c+c1}{//存放要求的Stirling数}
+\PYG{k}{const} \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{mod} \PYG{o}{=} \PYG{l+m+mf}{1e9} \PYG{o}{+} \PYG{l+m+mi}{7}\PYG{p}{;} \PYG{c+c1}{//取模}
+
+\PYG{k+kt}{void} \PYG{n+nf}{init}\PYG{p}{()} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//预处理}
+    \PYG{n}{memset}\PYG{p}{(}\PYG{n}{s}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{s}\PYG{p}{));}
+    \PYG{n}{s}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{maxn}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZlt{}=}\PYG{n}{i}\PYG{p}{;}\PYG{n}{j}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n}{s}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]}\PYG{o}{=}\PYG{n}{s}\PYG{p}{[}\PYG{n}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{n}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{+}\PYG{n}{j}\PYG{o}{*}\PYG{n}{s}\PYG{p}{[}\PYG{n}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{n}{j}\PYG{p}{];}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{s}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]}\PYG{o}{\PYGZgt{}=}\PYG{n}{mod}\PYG{p}{)}
+                \PYG{n}{s}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]}\PYG{o}{\PYGZpc{}=}\PYG{n}{mod}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

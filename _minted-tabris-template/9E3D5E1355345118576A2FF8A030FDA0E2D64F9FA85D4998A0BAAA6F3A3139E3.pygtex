@@ -1,0 +1,62 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{//一维树状数组}
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{N} \PYG{o}{=} \PYG{l+m+mi}{50000} \PYG{o}{+} \PYG{l+m+mi}{5}\PYG{p}{;}            \PYG{c+c1}{//数列的大小}
+\PYG{c+cp}{\PYGZsh{}define lowbit(x)  (x\PYGZam{}(\PYGZhy{}x))         }\PYG{c+c1}{//lowbit操作}
+\PYG{k+kt}{int} \PYG{n}{sum}\PYG{p}{[}\PYG{n}{N}\PYG{p}{],}\PYG{n}{cnt}\PYG{p}{;}                     
+\PYG{k+kt}{void} \PYG{n+nf}{update}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{index}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{val}\PYG{p}{)\PYGZob{}}     \PYG{c+c1}{//单点更新  （+val）}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{n}{index}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{N}\PYG{p}{;}\PYG{n}{i}\PYG{o}{+=}\PYG{n}{lowbit}\PYG{p}{(}\PYG{n}{i}\PYG{p}{))\PYGZob{}}\PYG{c+c1}{//i\PYGZlt{}=N   不能\PYGZlt{}=cnt\PYGZlt{}\PYGZhy{}\PYGZhy{}错了}
+        \PYG{n}{sum}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{+=}\PYG{n}{val}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{int} \PYG{n+nf}{getSum}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{index}\PYG{p}{)} \PYG{p}{\PYGZob{}}             \PYG{c+c1}{//求解1\PYGZti{}index的和}
+  \PYG{k+kt}{int} \PYG{n}{ans} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+  \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{n}{index}\PYG{p}{;} \PYG{n}{i}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZhy{}=} \PYG{n}{lowbit}\PYG{p}{(}\PYG{n}{i}\PYG{p}{))}
+    \PYG{n}{ans} \PYG{o}{+=} \PYG{n}{sum}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+  \PYG{k}{return} \PYG{n}{ans}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{void} \PYG{n+nf}{update}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{l}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{r}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{val}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{update}\PYG{p}{(}\PYG{n}{l}\PYG{p}{,}\PYG{n}{val}\PYG{p}{),}\PYG{n}{update}\PYG{p}{(}\PYG{n}{r}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{o}{\PYGZhy{}}\PYG{n}{val}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{int} \PYG{n+nf}{query}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{l}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{r}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{getSum}\PYG{p}{(}\PYG{n}{r}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{n}{getSum}\PYG{p}{(}\PYG{n}{l}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+cm}{/*}
+\PYG{c+cm}{一维区间更新（a,b）}
+\PYG{c+cm}{update(a,1);}
+\PYG{c+cm}{update(b+1,\PYGZhy{}1);}
+\PYG{c+cm}{\PYGZpc{} 注意这种情况下 不能区间查询}
+\PYG{c+cm}{*/}
+
+\PYG{c+c1}{//二维区间更新}
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{N} \PYG{o}{=} \PYG{l+m+mi}{1000}\PYG{o}{+}\PYG{l+m+mi}{5}\PYG{p}{;}
+\PYG{c+cp}{\PYGZsh{}define lowbit(x) (x\PYGZam{}\PYGZhy{}x)}
+\PYG{n}{LL} \PYG{n}{sum}\PYG{p}{[}\PYG{n}{N}\PYG{p}{][}\PYG{n}{N}\PYG{p}{];}
+\PYG{k+kt}{void} \PYG{n+nf}{update}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{xi}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{yi}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{val}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{n}{xi}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{N}\PYG{p}{;}\PYG{n}{i}\PYG{o}{+=}\PYG{n}{lowbit}\PYG{p}{(}\PYG{n}{i}\PYG{p}{))}
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j}\PYG{o}{=}\PYG{n}{yi}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZlt{}=}\PYG{n}{N}\PYG{p}{;}\PYG{n}{j}\PYG{o}{+=}\PYG{n}{lowbit}\PYG{p}{(}\PYG{n}{j}\PYG{p}{))}
+            \PYG{n}{sum}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]}\PYG{o}{+=}\PYG{n}{val}\PYG{p}{;}
+    \PYG{k}{return}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{int} \PYG{n+nf}{getSum}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{xi}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{yi}\PYG{p}{)\PYGZob{}}\PYG{c+c1}{//就是(x,y)这个位置的值}
+    \PYG{k+kt}{int} \PYG{n}{ans} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{n}{xi}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZhy{}=}\PYG{n}{lowbit}\PYG{p}{(}\PYG{n}{i}\PYG{p}{))}
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j}\PYG{o}{=}\PYG{n}{yi}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZhy{}=}\PYG{n}{lowbit}\PYG{p}{(}\PYG{n}{j}\PYG{p}{))}
+            \PYG{n}{ans}\PYG{o}{+=}\PYG{n}{sum}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{];}
+    \PYG{k}{return} \PYG{n}{ans} \PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{void} \PYG{n+nf}{update}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{y}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{X}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{Y}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{val}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{update}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{,}\PYG{n}{val}\PYG{p}{);}
+    \PYG{n}{update}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{Y}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{o}{\PYGZhy{}}\PYG{n}{val}\PYG{p}{);}
+    \PYG{n}{update}\PYG{p}{(}\PYG{n}{X}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{y}\PYG{p}{,}\PYG{o}{\PYGZhy{}}\PYG{n}{val}\PYG{p}{);}
+    \PYG{n}{update}\PYG{p}{(}\PYG{n}{X}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{Y}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{val}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+cm}{/*}
+\PYG{c+cm}{二维区间更新\PYGZob{}(a,b)|a∈[x,X],b∈[y,Y]\PYGZcb{} }
+\PYG{c+cm}{1.update(x,y,val); }
+\PYG{c+cm}{2.update(x,Y+1,\PYGZhy{}val); }
+\PYG{c+cm}{3.update(X+1,y,\PYGZhy{}val); }
+\PYG{c+cm}{4.update(X+1,Y+1,val); }
+\PYG{c+cm}{\PYGZpc{} 注意这种情况下 不能区间查询}
+
+\PYG{c+cm}{*/}
+\end{Verbatim}

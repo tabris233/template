@@ -1,0 +1,32 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/******************************************************}
+\PYG{c+cm}{康托展开是对全排列的一个hash}
+\PYG{c+cm}{康托展开的公式是 X=an*(n\PYGZhy{}1)!+an\PYGZhy{}1*(n\PYGZhy{}2)!+…+ai*(i\PYGZhy{}1)!+…+a2*1!+a1*0! }
+\PYG{c+cm}{其中，ai为当前未出现的元素中是排在第几个（从0开始）。 }
+\PYG{c+cm}{******************************************************/}
+\PYG{k+kt}{int} \PYG{n}{jiecheng}\PYG{p}{[}\PYG{l+m+mi}{10}\PYG{p}{]} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{6}\PYG{p}{,}\PYG{l+m+mi}{24}\PYG{p}{,}\PYG{l+m+mi}{120}\PYG{p}{,}\PYG{l+m+mi}{720}\PYG{p}{,}\PYG{l+m+mi}{5040}\PYG{p}{,}\PYG{l+m+mi}{40320}\PYG{p}{,}\PYG{l+m+mi}{362880}\PYG{p}{\PYGZcb{};}
+\PYG{k+kt}{int} \PYG{n}{a}\PYG{p}{[}\PYG{l+m+mi}{10}\PYG{p}{],}\PYG{n}{b}\PYG{p}{[}\PYG{l+m+mi}{10}\PYG{p}{];}
+\PYG{k+kt}{int} \PYG{n+nf}{Cantor\PYGZus{}expansion}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{a}\PYG{p}{[],}\PYG{k+kt}{int} \PYG{n}{len}\PYG{p}{)\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{x}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{len}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j}\PYG{o}{=}\PYG{n}{i}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{j}\PYG{o}{\PYGZlt{}}\PYG{n}{len}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)}\PYG{k}{if}\PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{\PYGZlt{}}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}
+             \PYG{n}{x}\PYG{o}{+=}\PYG{n}{jiecheng}\PYG{p}{[}\PYG{n}{len}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{o}{\PYGZhy{}}\PYG{n}{i}\PYG{p}{];}
+    \PYG{k}{return} \PYG{n}{x} \PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{bool} \PYG{n}{h}\PYG{p}{[}\PYG{n}{len}\PYG{o}{+}\PYG{l+m+mi}{5}\PYG{p}{];}\PYG{c+c1}{//len就是序列长度}
+\PYG{k+kt}{void} \PYG{n+nf}{Cantor\PYGZus{}inexpansion}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{len}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{memset}\PYG{p}{(}\PYG{n}{h}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{h}\PYG{p}{));}
+    \PYG{k+kt}{int} \PYG{n}{ind} \PYG{p}{,}\PYG{n}{tem}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{j}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{len}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{tem} \PYG{o}{=} \PYG{n}{x}\PYG{o}{/}\PYG{n}{jiecheng}\PYG{p}{[}\PYG{n}{len}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{o}{\PYGZhy{}}\PYG{n}{i}\PYG{p}{];}
+        \PYG{n}{x}  \PYG{o}{\PYGZpc{}=}   \PYG{n}{jiecheng}\PYG{p}{[}\PYG{n}{len}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{o}{\PYGZhy{}}\PYG{n}{i}\PYG{p}{];}
+        \PYG{k}{for}\PYG{p}{(}\PYG{n}{j}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{ind}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;;} \PYG{n}{j}\PYG{o}{\PYGZlt{}=}\PYG{n}{len}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{h}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])} \PYG{k}{continue}\PYG{p}{;}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{ind}\PYG{o}{==}\PYG{n}{tem}\PYG{p}{)\PYGZob{}}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{n}{j}\PYG{p}{;}\PYG{k}{break}\PYG{p}{;\PYGZcb{}}
+            \PYG{n}{ind}\PYG{o}{++}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{n}{h}\PYG{p}{[}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]]}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

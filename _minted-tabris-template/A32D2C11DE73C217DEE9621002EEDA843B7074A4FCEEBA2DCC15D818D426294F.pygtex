@@ -1,0 +1,27 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{LL} \PYG{n+nf}{exgcd\PYGZus{}euclid}\PYG{p}{(}\PYG{n}{LL} \PYG{n}{a}\PYG{p}{,}\PYG{n}{LL} \PYG{n}{b}\PYG{p}{,}\PYG{n}{LL} \PYG{o}{\PYGZam{}}\PYG{n}{x}\PYG{p}{,}\PYG{n}{LL} \PYG{o}{\PYGZam{}}\PYG{n}{y}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{b}\PYG{o}{==}\PYG{l+m+mi}{0}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{x}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{y}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{k}{return} \PYG{n}{a}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{LL} \PYG{n}{r}\PYG{o}{=}\PYG{n}{exgcd\PYGZus{}euclid}\PYG{p}{(}\PYG{n}{b}\PYG{p}{,}\PYG{n}{a}\PYG{o}{\PYGZpc{}}\PYG{n}{b}\PYG{p}{,}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{);}
+    \PYG{n}{LL} \PYG{n}{t}\PYG{o}{=}\PYG{n}{x}\PYG{p}{;}\PYG{n}{x}\PYG{o}{=}\PYG{n}{y}\PYG{p}{;}\PYG{n}{y}\PYG{o}{=}\PYG{n}{t}\PYG{o}{\PYGZhy{}}\PYG{n}{a}\PYG{o}{/}\PYG{n}{b}\PYG{o}{*}\PYG{n}{y}\PYG{p}{;}
+    \PYG{k}{return} \PYG{n}{r}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{n}{LL} \PYG{n+nf}{exgcd}\PYG{p}{(}\PYG{n}{LL} \PYG{n}{m}\PYG{p}{,}\PYG{n}{LL} \PYG{o}{\PYGZam{}}\PYG{n}{x}\PYG{p}{,}\PYG{n}{LL} \PYG{n}{n}\PYG{p}{,}\PYG{n}{LL} \PYG{o}{\PYGZam{}}\PYG{n}{y}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{LL} \PYG{n}{x1}\PYG{p}{,}\PYG{n}{x0}\PYG{p}{,}\PYG{n}{y1}\PYG{p}{,}\PYG{n}{y0}\PYG{p}{;}
+    \PYG{n}{x0}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{y0}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{n}{x1}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{y1}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{n}{LL} \PYG{n}{r}\PYG{o}{=}\PYG{p}{(}\PYG{n}{m}\PYG{o}{\PYGZpc{}}\PYG{n}{n}\PYG{o}{+}\PYG{n}{n}\PYG{p}{)}\PYG{o}{\PYGZpc{}}\PYG{n}{n}\PYG{p}{;}
+    \PYG{n}{LL} \PYG{n}{q}\PYG{o}{=}\PYG{p}{(}\PYG{n}{m}\PYG{o}{\PYGZhy{}}\PYG{n}{r}\PYG{p}{)}\PYG{o}{/}\PYG{n}{n}\PYG{p}{;}
+    \PYG{n}{x}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{y}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k}{while}\PYG{p}{(}\PYG{n}{r}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{x}\PYG{o}{=}\PYG{n}{x0}\PYG{o}{\PYGZhy{}}\PYG{n}{q}\PYG{o}{*}\PYG{n}{x1}\PYG{p}{,}\PYG{n}{y}\PYG{o}{=}\PYG{n}{y0}\PYG{o}{\PYGZhy{}}\PYG{n}{q}\PYG{o}{*}\PYG{n}{y1}\PYG{p}{,}\PYG{n}{x0}\PYG{o}{=}\PYG{n}{x1}\PYG{p}{,}\PYG{n}{y0}\PYG{o}{=}\PYG{n}{y1}\PYG{p}{;}
+        \PYG{n}{x1}\PYG{o}{=}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y1}\PYG{o}{=}\PYG{n}{y}\PYG{p}{;}
+        \PYG{n}{m}\PYG{o}{=}\PYG{n}{n}\PYG{p}{,}\PYG{n}{n}\PYG{o}{=}\PYG{n}{r}\PYG{p}{,}\PYG{n}{r}\PYG{o}{=}\PYG{n}{m}\PYG{o}{\PYGZpc{}}\PYG{n}{n}\PYG{p}{;}
+        \PYG{n}{q}\PYG{o}{=}\PYG{p}{(}\PYG{n}{m}\PYG{o}{\PYGZhy{}}\PYG{n}{r}\PYG{p}{)}\PYG{o}{/}\PYG{n}{n}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n}{n}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

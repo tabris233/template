@@ -1,0 +1,91 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/******************************************************}
+\PYG{c+cm}{二分图匹配}
+
+\PYG{c+cm}{算法介绍 }
+\PYG{c+cm}{最大匹配数    ：最大匹配的匹配边的数目 }
+\PYG{c+cm}{最小点覆盖数  ：选取最少的点，使任意一条边至少有一个端点被选择 }
+\PYG{c+cm}{最大独立数    ：选取最多的点，使任意所选两点均不相连 }
+\PYG{c+cm}{最小路径覆盖数：对于一个 DAG（有向无环图），选取最少条路径，使得每个顶点属于且仅属于一条路径。路径长可以为 0（即单个点）。}
+
+\PYG{c+cm}{定理1：最小点覆盖数   = 最大匹配数（这是 Konig 定理） }
+\PYG{c+cm}{定理2：最大独立数     = 顶点数 \PYGZhy{} 最大匹配数 }
+\PYG{c+cm}{定理3：最小路径覆盖数 = 顶点数 \PYGZhy{} 最大匹配数}
+
+\PYG{c+cm}{独立集：任意两点都不相连的顶点的集合}
+\PYG{c+cm}{独立数：独立集中顶点的个数}
+\PYG{c+cm}{完全子图：任意两点都相连的顶点的集合}
+\PYG{c+cm}{最大完全数：最大完全子图中顶点的个数}
+\PYG{c+cm}{最大完全数=原图的补图的最大独立数}
+\PYG{c+cm}{最大独立数=顶点数\PYGZhy{}最大匹配数}
+
+\PYG{c+cm}{匈牙利算法求解二分图匹配问题}
+\PYG{c+cm}{******************************************************/}
+\PYG{k+kt}{int} \PYG{n}{k}\PYG{p}{,}\PYG{n}{n}\PYG{p}{,}\PYG{n}{m}\PYG{p}{;}
+\PYG{k+kt}{int} \PYG{n}{match}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{k+kt}{int} \PYG{n}{vis}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int} \PYG{o}{\PYGZgt{}}\PYG{n}{G}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+
+\PYG{k+kt}{int} \PYG{n}{tot}\PYG{p}{,}\PYG{n}{a}\PYG{p}{;}
+\PYG{k+kt}{int} \PYG{n}{col}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{c+c1}{//二分图染色  用来判断是不是二分图}
+\PYG{k+kt}{bool} \PYG{n+nf}{color}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{s}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{queue}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}}\PYG{n}{q}\PYG{p}{;}
+    \PYG{n}{q}\PYG{p}{.}\PYG{n}{push}\PYG{p}{(}\PYG{n}{s}\PYG{p}{);}\PYG{n}{col}\PYG{p}{[}\PYG{n}{s}\PYG{p}{]}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k}{while}\PYG{p}{(}\PYG{o}{!}\PYG{n}{q}\PYG{p}{.}\PYG{n}{empty}\PYG{p}{())\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{u} \PYG{o}{=} \PYG{n}{q}\PYG{p}{.}\PYG{n}{front}\PYG{p}{();}\PYG{n}{q}\PYG{p}{.}\PYG{n}{pop}\PYG{p}{();}
+        \PYG{n}{tot}\PYG{o}{++}\PYG{p}{;}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{col}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]}\PYG{o}{==}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{n}{a}\PYG{o}{++}\PYG{p}{;}
+        \PYG{k+kt}{int} \PYG{n}{gz}\PYG{o}{=}\PYG{n}{G}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{size}\PYG{p}{();}
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{to}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{gz}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+            \PYG{n}{to}\PYG{o}{=}\PYG{n}{G}\PYG{p}{[}\PYG{n}{u}\PYG{p}{][}\PYG{n}{i}\PYG{p}{];}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{col}\PYG{p}{[}\PYG{n}{to}\PYG{p}{]}\PYG{o}{==}\PYG{l+m+mi}{0}\PYG{p}{)\PYGZob{}}
+                \PYG{n}{col}\PYG{p}{[}\PYG{n}{to}\PYG{p}{]}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{o}{\PYGZhy{}}\PYG{n}{col}\PYG{p}{[}\PYG{n}{u}\PYG{p}{];}
+                \PYG{n}{q}\PYG{p}{.}\PYG{n}{push}\PYG{p}{(}\PYG{n}{to}\PYG{p}{);}
+            \PYG{p}{\PYGZcb{}}
+            \PYG{k}{else} \PYG{k}{if}\PYG{p}{(}\PYG{n}{col}\PYG{p}{[}\PYG{n}{to}\PYG{p}{]}\PYG{o}{==}\PYG{n}{col}\PYG{p}{[}\PYG{n}{u}\PYG{p}{])}
+                \PYG{k}{return} \PYG{n+nb}{false}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n+nb}{true}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{bool} \PYG{n+nf}{findi}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{G}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{size}\PYG{p}{();}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{v}\PYG{o}{=}\PYG{n}{G}\PYG{p}{[}\PYG{n}{u}\PYG{p}{][}\PYG{n}{i}\PYG{p}{];}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{vis}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]}\PYG{o}{==}\PYG{l+m+mi}{0}\PYG{p}{)\PYGZob{}}
+            \PYG{n}{vis}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{match}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]}\PYG{o}{==\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{o}{||}\PYG{n}{findi}\PYG{p}{(}\PYG{n}{match}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]))\PYGZob{}}
+                \PYG{n}{match}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]}\PYG{o}{=}\PYG{n}{u}\PYG{p}{;}
+                \PYG{k}{return} \PYG{n+nb}{true}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n+nb}{false}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{void} \PYG{n+nf}{init}\PYG{p}{()\PYGZob{}}
+    \PYG{n}{memset}\PYG{p}{(}\PYG{n}{match}\PYG{p}{,}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{match}\PYG{p}{));}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{n}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{n}{G}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{clear}\PYG{p}{(),}\PYG{n}{col}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{n}{vis}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{void} \PYG{n+nf}{add}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{v}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{G}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{push\PYGZus{}back}\PYG{p}{(}\PYG{n}{v}\PYG{p}{);}
+    \PYG{n}{G}\PYG{p}{[}\PYG{n}{v}\PYG{p}{].}\PYG{n}{push\PYGZus{}back}\PYG{p}{(}\PYG{n}{u}\PYG{p}{);} \PYG{c+c1}{//无向图才需要}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{int} \PYG{n+nf}{maxMATCH}\PYG{p}{()\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{ans} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}  \PYG{c+c1}{//ans 是最大匹配数,}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{n}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{memset}\PYG{p}{(}\PYG{n}{vis}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{vis}\PYG{p}{));}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{findi}\PYG{p}{(}\PYG{n}{i}\PYG{p}{))} \PYG{n}{ans}\PYG{o}{++}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{ans}\PYG{o}{/=}\PYG{l+m+mi}{2}\PYG{p}{;}   \PYG{c+c1}{//对于无向图的话 需要ans/=2;}
+    \PYG{k}{return} \PYG{n}{ans} \PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{bool} \PYG{n+nf}{perfectMATCH}\PYG{p}{()\PYGZob{}}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{maxMATCH}\PYG{p}{()}\PYG{o}{==}\PYG{n}{n}\PYG{p}{)} \PYG{k}{return} \PYG{n+nb}{true}\PYG{p}{;}
+    \PYG{k}{else}              \PYG{k}{return} \PYG{n+nb}{false}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

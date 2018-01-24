@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{LL} \PYG{n+nf}{CRT}\PYG{p}{(}\PYG{n}{LL} \PYG{n}{a}\PYG{p}{[],}\PYG{n}{LL} \PYG{n}{m}\PYG{p}{[],}\PYG{n}{LL} \PYG{n}{len}\PYG{p}{)\PYGZob{}} \PYG{c+c1}{//x\PYGZpc{}m[i]=a[i],m[]必须满足两两互质}
+    \PYG{n}{LL} \PYG{n}{i}\PYG{p}{,}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{,}\PYG{n}{M}\PYG{p}{,}\PYG{n}{n}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{ret}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{len}\PYG{p}{;} \PYG{o}{++}\PYG{n}{i}\PYG{p}{)} \PYG{n}{n}\PYG{o}{*=}\PYG{n}{m}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+    \PYG{k}{for}\PYG{p}{(}\PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{len}\PYG{p}{;} \PYG{o}{++}\PYG{n}{i}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{M}\PYG{o}{=}\PYG{n}{n}\PYG{o}{/}\PYG{n}{m}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+        \PYG{n}{exgcd}\PYG{p}{(}\PYG{n}{M}\PYG{p}{,}\PYG{n}{m}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{);}
+        \PYG{n}{ret}\PYG{o}{=}\PYG{p}{(}\PYG{n}{ret}\PYG{o}{+}\PYG{n}{qmod}\PYG{p}{(}\PYG{n}{qmod}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{M}\PYG{p}{,}\PYG{n}{n}\PYG{p}{),}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],}\PYG{n}{n}\PYG{p}{))}\PYG{o}{\PYGZpc{}}\PYG{n}{n}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{p}{(}\PYG{n}{ret}\PYG{o}{+}\PYG{n}{n}\PYG{p}{)}\PYG{o}{\PYGZpc{}}\PYG{n}{n}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

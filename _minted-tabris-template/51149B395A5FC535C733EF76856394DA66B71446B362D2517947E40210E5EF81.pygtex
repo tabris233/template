@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{multiset}
+
+\PYG{c+c1}{// 在\PYGZlt{}set\PYGZgt{}头文件中，还定义了另一个非常实用的模版类multiset(多重集合)。}
+\PYG{c+c1}{// 多重集合与集合的区别在于集合中不能存在相同元素，而多重集合中可以存在。}
+
+\PYG{c+c1}{// 定义multiset对象的示例代码如下：}
+
+\PYG{n}{multiset}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{n}{s}\PYG{p}{;}
+\PYG{n}{multiset}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}} \PYG{n}{ss}\PYG{p}{;}
+
+\PYG{c+c1}{// multiset和set的基本操作相似，需要注意的是，集合的count()能返回0(无)或者1(有)，}
+\PYG{c+c1}{// 而多重集合是有多少个返回多少个。}
+\end{Verbatim}

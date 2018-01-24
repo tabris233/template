@@ -1,0 +1,30 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// 预处理}
+\PYG{k+kt}{int} \PYG{n}{SG}\PYG{p}{[}\PYG{n}{MAX}\PYG{o}{+}\PYG{l+m+mi}{10}\PYG{p}{],}\PYG{n}{s}\PYG{p}{[}\PYG{n}{N}\PYG{o}{+}\PYG{l+m+mi}{10}\PYG{p}{],}\PYG{n}{has}\PYG{p}{[}\PYG{n}{N}\PYG{o}{+}\PYG{l+m+mi}{10}\PYG{p}{];}
+\PYG{k+kt}{void} \PYG{n+nf}{getSG}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{n}\PYG{p}{)\PYGZob{}} \PYG{c+c1}{//n 代表最大的状态既石子个数}
+    \PYG{n}{SG}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{memset}\PYG{p}{(}\PYG{n}{has}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{has}\PYG{p}{));}  \PYG{c+c1}{//has数组的大小可以优化 否则可能会TLE}
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j}\PYG{o}{\PYGZlt{}}\PYG{n}{t}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)}      \PYG{c+c1}{//t代表所有可以取的石子的数量的种类数}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{i}\PYG{o}{\PYGZhy{}}\PYG{n}{s}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{\PYGZgt{}=}\PYG{l+m+mi}{0}\PYG{c+cm}{/*这里可以加入has数组的上界以防数组越界*/}\PYG{p}{)}  
+                \PYG{n}{has}\PYG{p}{[}\PYG{n}{SG}\PYG{p}{[}\PYG{n}{i}\PYG{o}{\PYGZhy{}}\PYG{n}{s}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]]]}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)}\PYG{k}{if}\PYG{p}{(}\PYG{o}{!}\PYG{n}{has}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])\PYGZob{}}
+            \PYG{n}{SG}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{n}{j}\PYG{p}{;}\PYG{k}{break}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+c1}{// 记忆化搜索}
+\PYG{c+c1}{//注意要先对SG memset(SG,\PYGZhy{}1,sizeof(SG));}
+\PYG{k+kt}{int} \PYG{n}{SG}\PYG{p}{[}\PYG{n}{MAX}\PYG{o}{+}\PYG{l+m+mi}{10}\PYG{p}{],}\PYG{n}{s}\PYG{p}{[}\PYG{n}{N}\PYG{o}{+}\PYG{l+m+mi}{10}\PYG{p}{];}
+\PYG{k+kt}{bool} \PYG{n}{has}\PYG{p}{[}\PYG{n}{min}\PYG{p}{(}\PYG{n}{MAX}\PYG{p}{,}\PYG{n}{N}\PYG{p}{)}\PYG{o}{+}\PYG{l+m+mi}{10}\PYG{p}{];}
+\PYG{k+kt}{int} \PYG{n+nf}{dfsSG}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{n}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{SG}\PYG{p}{[}\PYG{n}{n}\PYG{p}{]}\PYG{o}{!=\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{k}{return} \PYG{n}{SG}\PYG{p}{[}\PYG{n}{n}\PYG{p}{];}
+    \PYG{n}{memset}\PYG{p}{(}\PYG{n}{has}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{has}\PYG{p}{));}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{t}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{x}\PYG{o}{\PYGZhy{}}\PYG{n}{s}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{\PYGZgt{}=}\PYG{l+m+mi}{0}\PYG{p}{)} \PYG{n}{vis}\PYG{p}{[}\PYG{n}{dfs}\PYG{p}{(}\PYG{n}{x}\PYG{o}{\PYGZhy{}}\PYG{n}{s}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])]}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}\PYG{k}{if}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{o}{==}\PYG{n}{has}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])\PYGZob{}}
+        \PYG{n}{SG}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]}\PYG{o}{=}\PYG{n}{i}\PYG{p}{;}\PYG{k}{break}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n}{SG}\PYG{p}{[}\PYG{n}{n}\PYG{p}{];}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

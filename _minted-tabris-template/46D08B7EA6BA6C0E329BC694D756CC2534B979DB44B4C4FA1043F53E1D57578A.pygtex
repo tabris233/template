@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kr}{inline} \PYG{k+kt}{int} \PYG{n+nf}{read}\PYG{p}{()\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{x}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{f}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{k+kt}{char} \PYG{n}{ch}\PYG{o}{=}\PYG{n}{getchar}\PYG{p}{();}
+    \PYG{k}{while}\PYG{p}{(}\PYG{n}{ch}\PYG{o}{\PYGZlt{}}\PYG{l+s+sc}{\PYGZsq{}0\PYGZsq{}}\PYG{o}{||}\PYG{n}{ch}\PYG{o}{\PYGZgt{}}\PYG{l+s+sc}{\PYGZsq{}9\PYGZsq{}}\PYG{p}{)\PYGZob{}}\PYG{k}{if}\PYG{p}{(}\PYG{n}{ch}\PYG{o}{==}\PYG{l+s+sc}{\PYGZsq{}\PYGZhy{}\PYGZsq{}}\PYG{p}{)}\PYG{n}{f}\PYG{o}{=\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{ch}\PYG{o}{=}\PYG{n}{getchar}\PYG{p}{();\PYGZcb{}}
+    \PYG{k}{while}\PYG{p}{(}\PYG{n}{ch}\PYG{o}{\PYGZgt{}=}\PYG{l+s+sc}{\PYGZsq{}0\PYGZsq{}}\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{n}{ch}\PYG{o}{\PYGZlt{}=}\PYG{l+s+sc}{\PYGZsq{}9\PYGZsq{}}\PYG{p}{)\PYGZob{}}\PYG{n}{x}\PYG{o}{=}\PYG{n}{x}\PYG{o}{*}\PYG{l+m+mi}{10}\PYG{o}{+}\PYG{n}{ch}\PYG{o}{\PYGZhy{}}\PYG{l+s+sc}{\PYGZsq{}0\PYGZsq{}}\PYG{p}{;}\PYG{n}{ch}\PYG{o}{=}\PYG{n}{getchar}\PYG{p}{();\PYGZcb{}}
+    \PYG{k}{return} \PYG{n}{x}\PYG{o}{*}\PYG{n}{f}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kr}{inline} \PYG{k+kt}{void} \PYG{n+nf}{write}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)\PYGZob{}}
+     \PYG{k}{if}\PYG{p}{(}\PYG{n}{x}\PYG{o}{\PYGZlt{}}\PYG{l+m+mi}{0}\PYG{p}{)} \PYG{n}{putchar}\PYG{p}{(}\PYG{l+s+sc}{\PYGZsq{}\PYGZhy{}\PYGZsq{}}\PYG{p}{),}\PYG{n}{x}\PYG{o}{=\PYGZhy{}}\PYG{n}{x}\PYG{p}{;}
+     \PYG{k}{if}\PYG{p}{(}\PYG{n}{x}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{9}\PYG{p}{)} \PYG{n}{write}\PYG{p}{(}\PYG{n}{x}\PYG{o}{/}\PYG{l+m+mi}{10}\PYG{p}{);}
+     \PYG{n}{putchar}\PYG{p}{(}\PYG{n}{x}\PYG{o}{\PYGZpc{}}\PYG{l+m+mi}{10}\PYG{o}{+}\PYG{l+s+sc}{\PYGZsq{}0\PYGZsq{}}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

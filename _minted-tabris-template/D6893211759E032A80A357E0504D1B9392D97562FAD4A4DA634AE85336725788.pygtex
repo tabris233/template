@@ -1,0 +1,34 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// KMP}
+
+\PYG{k+kt}{char} \PYG{n}{s1}\PYG{p}{[}\PYG{n}{N}\PYG{p}{],}\PYG{n}{s2}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{k+kt}{int} \PYG{n}{Next}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}\PYG{c+c1}{//Next[i] 表示从[0\PYGZti{}i]中最长公共前缀的长.}
+\PYG{k+kt}{void} \PYG{n+nf}{get\PYGZus{}next}\PYG{p}{(}\PYG{k+kt}{char} \PYG{o}{*}\PYG{n}{s}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{len}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{j}\PYG{o}{=\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{len}\PYG{p}{;}\PYG{o}{++}\PYG{n}{i}\PYG{p}{,}\PYG{o}{++}\PYG{n}{j}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{Next}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{n}{j}\PYG{p}{;}
+        \PYG{k}{while}\PYG{p}{(}\PYG{n}{j}\PYG{o}{\PYGZgt{}=}\PYG{l+m+mi}{0}\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{n}{s}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{!=}\PYG{n}{s}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])} \PYG{n}{j} \PYG{o}{=} \PYG{n}{Next}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}
+    \PYG{p}{\PYGZcb{}}
+\PYG{c+c1}{//    for(int i=0;i\PYGZlt{}=len;i++) printf(\PYGZdq{}\PYGZpc{}d\PYGZpc{}c\PYGZdq{},Next[i],(i==len)?\PYGZsq{}\PYGZbs{}n\PYGZsq{}:\PYGZsq{} \PYGZsq{});}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+c1}{//在串s上找sz}
+\PYG{k+kt}{int} \PYG{n+nf}{KMP} \PYG{p}{(}\PYG{k+kt}{char} \PYG{o}{*}\PYG{n}{s}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{len}\PYG{p}{,}\PYG{k+kt}{char} \PYG{o}{*}\PYG{n}{sz}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{l}\PYG{p}{)\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{j}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{cnt}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{while}\PYG{p}{(}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{len}\PYG{c+cm}{/*\PYGZam{}\PYGZam{}j\PYGZlt{}l*/}\PYG{p}{)\PYGZob{}}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{s}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{==}\PYG{n}{sz}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])}  \PYG{n}{i}\PYG{o}{++}\PYG{p}{,}\PYG{n}{j}\PYG{o}{++}\PYG{p}{;}
+        \PYG{k}{else}\PYG{p}{\PYGZob{}}
+            \PYG{k}{if}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{o}{==}\PYG{n}{j}\PYG{p}{)}  \PYG{n}{i}\PYG{o}{++}\PYG{p}{;}
+            \PYG{k}{else}      \PYG{n}{j}\PYG{o}{=}\PYG{n}{Next}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{j}\PYG{o}{==}\PYG{n}{l}\PYG{p}{)} \PYG{n}{cnt}\PYG{o}{++}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//   return (j==l)?(i\PYGZhy{}l+1):\PYGZhy{}1; //找第一次出现的位置}
+    \PYG{k}{return} \PYG{n}{cnt}\PYG{p}{;} \PYG{c+c1}{//找出现的个数}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+cm}{/*}
+\PYG{c+cm}{            for(int j=0,i=0;i\PYGZlt{}=len;i++,j++)\PYGZob{}}
+\PYG{c+cm}{                ans \PYGZca{}= 1LL*(j)*(j)*(len\PYGZhy{}k\PYGZhy{}j)*(i\PYGZhy{}j) ;}
+\PYG{c+cm}{                while(j\PYGZgt{}=0\PYGZam{}\PYGZam{}a[i]!=p[j]) j=Next[j];}
+\PYG{c+cm}{            \PYGZcb{}}
+\PYG{c+cm}{*/}
+\end{Verbatim}

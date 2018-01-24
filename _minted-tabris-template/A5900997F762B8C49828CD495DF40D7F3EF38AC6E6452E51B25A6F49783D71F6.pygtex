@@ -1,0 +1,122 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}stdio.h\PYGZgt{}      }
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}string.h\PYGZgt{}      }
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}algorithm\PYGZgt{}      }
+\PYG{c+cp}{\PYGZsh{}define clear(A, X) memset (A, X, sizeof A)      }
+\PYG{c+cp}{\PYGZsh{}define copy(A, B) memcpy (A, B, sizeof A)      }
+\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{std}\PYG{p}{;}      
+      
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{maxE} \PYG{o}{=} \PYG{l+m+mi}{1000000}\PYG{p}{;}      
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{maxN} \PYG{o}{=} \PYG{l+m+mi}{100000}\PYG{p}{;}      
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{maxQ} \PYG{o}{=} \PYG{l+m+mi}{1000000}\PYG{p}{;}      
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{oo} \PYG{o}{=} \PYG{l+m+mh}{0x3f3f3f3f}\PYG{p}{;}      
+       
+\PYG{k}{struct} \PYG{n}{Edge} \PYG{p}{\PYGZob{}}      
+   \PYG{k+kt}{int} \PYG{n}{v}\PYG{p}{;}\PYG{c+c1}{//弧尾      }
+   \PYG{k+kt}{int} \PYG{n}{c}\PYG{p}{;}\PYG{c+c1}{//容量      }
+   \PYG{k+kt}{int} \PYG{n}{n}\PYG{p}{;}\PYG{c+c1}{//指向下一条从同一个弧头出发的弧      }
+\PYG{p}{\PYGZcb{}} \PYG{n}{edge}\PYG{p}{[}\PYG{n}{maxE}\PYG{p}{];}\PYG{c+c1}{//边组      }
+      
+     
+\PYG{k+kt}{int} \PYG{n}{adj}\PYG{p}{[}\PYG{n}{maxN}\PYG{p}{],} \PYG{n}{cntE}\PYG{p}{;}\PYG{c+c1}{//前向星的表头      }
+\PYG{k+kt}{int} \PYG{n}{Q}\PYG{p}{[}\PYG{n}{maxQ}\PYG{p}{],} \PYG{n}{head}\PYG{p}{,} \PYG{n}{tail}\PYG{p}{;}\PYG{c+c1}{//队列      }
+\PYG{k+kt}{int} \PYG{n}{d}\PYG{p}{[}\PYG{n}{maxN}\PYG{p}{],} \PYG{n}{cur}\PYG{p}{[}\PYG{n}{maxN}\PYG{p}{],} \PYG{n}{pre}\PYG{p}{[}\PYG{n}{maxN}\PYG{p}{],} \PYG{n}{num}\PYG{p}{[}\PYG{n}{maxN}\PYG{p}{];}      
+\PYG{k+kt}{int} \PYG{n}{sourse}\PYG{p}{,} \PYG{n}{sink}\PYG{p}{,} \PYG{n}{nv}\PYG{p}{;}\PYG{c+c1}{//sourse：源点，sink：汇点，nv：编号修改的上限      }
+\PYG{k+kt}{int} \PYG{n}{n}\PYG{p}{,} \PYG{n}{m}\PYG{p}{;}      
+      
+\PYG{k+kt}{void} \PYG{n+nf}{addedge} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{v}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{c}\PYG{p}{)} \PYG{p}{\PYGZob{}}\PYG{c+c1}{//添加边      }
+    \PYG{c+c1}{//正向边      }
+    \PYG{n}{edge}\PYG{p}{[}\PYG{n}{cntE}\PYG{p}{].}\PYG{n}{v} \PYG{o}{=} \PYG{n}{v}\PYG{p}{;}      
+    \PYG{n}{edge}\PYG{p}{[}\PYG{n}{cntE}\PYG{p}{].}\PYG{n}{c} \PYG{o}{=} \PYG{n}{c}\PYG{p}{;}\PYG{c+c1}{//正向弧的容量为c      }
+    \PYG{n}{edge}\PYG{p}{[}\PYG{n}{cntE}\PYG{p}{].}\PYG{n}{n} \PYG{o}{=} \PYG{n}{adj}\PYG{p}{[}\PYG{n}{u}\PYG{p}{];}      
+    \PYG{n}{adj}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{=} \PYG{n}{cntE}\PYG{o}{++}\PYG{p}{;}      
+          
+    \PYG{c+c1}{//反向边      }
+    \PYG{n}{edge}\PYG{p}{[}\PYG{n}{cntE}\PYG{p}{].}\PYG{n}{v} \PYG{o}{=} \PYG{n}{u}\PYG{p}{;}      
+    \PYG{n}{edge}\PYG{p}{[}\PYG{n}{cntE}\PYG{p}{].}\PYG{n}{c} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}\PYG{c+c1}{//反向弧的容量为0      }
+    \PYG{n}{edge}\PYG{p}{[}\PYG{n}{cntE}\PYG{p}{].}\PYG{n}{n} \PYG{o}{=} \PYG{n}{adj}\PYG{p}{[}\PYG{n}{v}\PYG{p}{];}      
+    \PYG{n}{adj}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{=} \PYG{n}{cntE}\PYG{o}{++}\PYG{p}{;}      
+\PYG{p}{\PYGZcb{}}      
+       
+\PYG{k+kt}{void} \PYG{n+nf}{rev\PYGZus{}bfs} \PYG{p}{()} \PYG{p}{\PYGZob{}}\PYG{c+c1}{//反向BFS标号      }
+    \PYG{n}{clear} \PYG{p}{(}\PYG{n}{num}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{);}      
+    \PYG{n}{clear} \PYG{p}{(}\PYG{n}{d}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{);}\PYG{c+c1}{//没标过号则为\PYGZhy{}1      }
+    \PYG{n}{d}\PYG{p}{[}\PYG{n}{sink}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}\PYG{c+c1}{//汇点默认为标过号      }
+    \PYG{n}{num}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}      
+    \PYG{n}{head} \PYG{o}{=} \PYG{n}{tail} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}      
+    \PYG{n}{Q}\PYG{p}{[}\PYG{n}{tail}\PYG{o}{++}\PYG{p}{]} \PYG{o}{=} \PYG{n}{sink}\PYG{p}{;}      
+       
+    \PYG{k}{while} \PYG{p}{(}\PYG{n}{head} \PYG{o}{!=} \PYG{n}{tail}\PYG{p}{)} \PYG{p}{\PYGZob{}}      
+        \PYG{k+kt}{int} \PYG{n}{u} \PYG{o}{=} \PYG{n}{Q}\PYG{p}{[}\PYG{n}{head}\PYG{o}{++}\PYG{p}{];}      
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{n}{adj}\PYG{p}{[}\PYG{n}{u}\PYG{p}{];} \PYG{o}{\PYGZti{}}\PYG{n}{i}\PYG{p}{;} \PYG{n}{i} \PYG{o}{=} \PYG{n}{edge}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{n}\PYG{p}{)} \PYG{p}{\PYGZob{}}      
+            \PYG{k+kt}{int} \PYG{n}{v} \PYG{o}{=} \PYG{n}{edge}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{v}\PYG{p}{;}      
+            \PYG{k}{if} \PYG{p}{(}\PYG{o}{\PYGZti{}}\PYG{n}{d}\PYG{p}{[}\PYG{n}{v}\PYG{p}{])} \PYG{k}{continue}\PYG{p}{;}\PYG{c+c1}{//已经标过号      }
+            \PYG{n}{d}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{=} \PYG{n}{d}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}\PYG{c+c1}{//标号      }
+            \PYG{n}{Q}\PYG{p}{[}\PYG{n}{tail}\PYG{o}{++}\PYG{p}{]} \PYG{o}{=} \PYG{n}{v}\PYG{p}{;}      
+            \PYG{n}{num}\PYG{p}{[}\PYG{n}{d}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]]}\PYG{o}{++}\PYG{p}{;}      
+        \PYG{p}{\PYGZcb{}}      
+    \PYG{p}{\PYGZcb{}}      
+\PYG{p}{\PYGZcb{}}      
+      
+\PYG{k+kt}{int} \PYG{n+nf}{ISAP}\PYG{p}{()} \PYG{p}{\PYGZob{}}      
+    \PYG{n}{copy} \PYG{p}{(}\PYG{n}{cur}\PYG{p}{,} \PYG{n}{adj}\PYG{p}{);}\PYG{c+c1}{//复制，当前弧优化      }
+    \PYG{n}{rev\PYGZus{}bfs} \PYG{p}{();}\PYG{c+c1}{//只用标号一次就够了，重标号在ISAP主函数中进行就行了      }
+    \PYG{k+kt}{int} \PYG{n}{flow} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{u} \PYG{o}{=} \PYG{n}{pre}\PYG{p}{[}\PYG{n}{sourse}\PYG{p}{]} \PYG{o}{=} \PYG{n}{sourse}\PYG{p}{,} \PYG{n}{i}\PYG{p}{;}      
+      
+    \PYG{k}{while} \PYG{p}{(}\PYG{n}{d}\PYG{p}{[}\PYG{n}{sink}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{n}{nv}\PYG{p}{)} \PYG{p}{\PYGZob{}}\PYG{c+c1}{//最长也就是一条链，其中最大的标号只会是nv \PYGZhy{} 1，如果大于等于nv了说明中间已经断层了。      }
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{u} \PYG{o}{==} \PYG{n}{sink}\PYG{p}{)} \PYG{p}{\PYGZob{}}\PYG{c+c1}{//如果已经找到了一条增广路，则沿着增广路修改流量      }
+            \PYG{k+kt}{int} \PYG{n}{f} \PYG{o}{=} \PYG{n}{oo}\PYG{p}{,} \PYG{n}{neck}\PYG{p}{;}      
+            \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{n}{sourse}\PYG{p}{;} \PYG{n}{i} \PYG{o}{!=} \PYG{n}{sink}\PYG{p}{;} \PYG{n}{i} \PYG{o}{=} \PYG{n}{edge}\PYG{p}{[}\PYG{n}{cur}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]].}\PYG{n}{v}\PYG{p}{)} \PYG{p}{\PYGZob{}}      
+                \PYG{k}{if} \PYG{p}{(}\PYG{n}{f} \PYG{o}{\PYGZgt{}} \PYG{n}{edge}\PYG{p}{[}\PYG{n}{cur}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]].}\PYG{n}{c}\PYG{p}{)\PYGZob{}}      
+                    \PYG{n}{f} \PYG{o}{=} \PYG{n}{edge}\PYG{p}{[}\PYG{n}{cur}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]].}\PYG{n}{c}\PYG{p}{;}\PYG{c+c1}{//不断更新需要减少的流量      }
+                    \PYG{n}{neck} \PYG{o}{=} \PYG{n}{i}\PYG{p}{;}\PYG{c+c1}{//记录回退点，目的是为了不用再回到起点重新找      }
+                \PYG{p}{\PYGZcb{}}      
+            \PYG{p}{\PYGZcb{}}      
+            \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{n}{sourse}\PYG{p}{;} \PYG{n}{i} \PYG{o}{!=} \PYG{n}{sink}\PYG{p}{;} \PYG{n}{i} \PYG{o}{=} \PYG{n}{edge}\PYG{p}{[}\PYG{n}{cur}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]].}\PYG{n}{v}\PYG{p}{)} \PYG{p}{\PYGZob{}}\PYG{c+c1}{//修改流量      }
+                \PYG{n}{edge}\PYG{p}{[}\PYG{n}{cur}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]].}\PYG{n}{c} \PYG{o}{\PYGZhy{}=} \PYG{n}{f}\PYG{p}{;}      
+                \PYG{n}{edge}\PYG{p}{[}\PYG{n}{cur}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZca{}} \PYG{l+m+mi}{1}\PYG{p}{].}\PYG{n}{c} \PYG{o}{+=} \PYG{n}{f}\PYG{p}{;}      
+            \PYG{p}{\PYGZcb{}}      
+            \PYG{n}{flow} \PYG{o}{+=} \PYG{n}{f}\PYG{p}{;}\PYG{c+c1}{//更新      }
+            \PYG{n}{u} \PYG{o}{=} \PYG{n}{neck}\PYG{p}{;}\PYG{c+c1}{//回退      }
+        \PYG{p}{\PYGZcb{}}      
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{n}{cur}\PYG{p}{[}\PYG{n}{u}\PYG{p}{];} \PYG{o}{\PYGZti{}}\PYG{n}{i}\PYG{p}{;} \PYG{n}{i} \PYG{o}{=} \PYG{n}{edge}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{n}\PYG{p}{)} \PYG{k}{if} \PYG{p}{(}\PYG{n}{d}\PYG{p}{[}\PYG{n}{edge}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{v}\PYG{p}{]} \PYG{o}{+} \PYG{l+m+mi}{1} \PYG{o}{==} \PYG{n}{d}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{edge}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{c}\PYG{p}{)} \PYG{k}{break}\PYG{p}{;}      
+        \PYG{k}{if} \PYG{p}{(}\PYG{o}{\PYGZti{}}\PYG{n}{i}\PYG{p}{)} \PYG{p}{\PYGZob{}}\PYG{c+c1}{//如果存在可行增广路，更新      }
+            \PYG{n}{cur}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{=} \PYG{n}{i}\PYG{p}{;}\PYG{c+c1}{//修改当前弧      }
+            \PYG{n}{pre}\PYG{p}{[}\PYG{n}{edge}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{v}\PYG{p}{]} \PYG{o}{=} \PYG{n}{u}\PYG{p}{;}      
+            \PYG{n}{u} \PYG{o}{=} \PYG{n}{edge}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{v}\PYG{p}{;}      
+        \PYG{p}{\PYGZcb{}}      
+        \PYG{k}{else} \PYG{p}{\PYGZob{}}\PYG{c+c1}{//否则回退，重新找增广路      }
+            \PYG{k}{if} \PYG{p}{(}\PYG{l+m+mi}{0} \PYG{o}{==} \PYG{p}{(}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{n}{num}\PYG{p}{[}\PYG{n}{d}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]]))} \PYG{k}{break}\PYG{p}{;}\PYG{c+c1}{//GAP间隙优化，如果出现断层，可以知道一定不会再有增广路了      }
+            \PYG{k+kt}{int} \PYG{n}{mind} \PYG{o}{=} \PYG{n}{nv}\PYG{p}{;}      
+            \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{n}{adj}\PYG{p}{[}\PYG{n}{u}\PYG{p}{];} \PYG{o}{\PYGZti{}}\PYG{n}{i}\PYG{p}{;} \PYG{n}{i} \PYG{o}{=} \PYG{n}{edge}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{n}\PYG{p}{)} \PYG{p}{\PYGZob{}}      
+                \PYG{k}{if} \PYG{p}{(}\PYG{n}{edge}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{c} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{mind} \PYG{o}{\PYGZgt{}} \PYG{n}{d}\PYG{p}{[}\PYG{n}{edge}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{v}\PYG{p}{])} \PYG{p}{\PYGZob{}}\PYG{c+c1}{//寻找可以增广的最小标号      }
+                    \PYG{n}{cur}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{=} \PYG{n}{i}\PYG{p}{;}\PYG{c+c1}{//修改当前弧      }
+                    \PYG{n}{mind} \PYG{o}{=} \PYG{n}{d}\PYG{p}{[}\PYG{n}{edge}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{v}\PYG{p}{];}      
+                \PYG{p}{\PYGZcb{}}      
+            \PYG{p}{\PYGZcb{}}      
+            \PYG{n}{d}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{=} \PYG{n}{mind} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}      
+            \PYG{n}{num}\PYG{p}{[}\PYG{n}{d}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]]}\PYG{o}{++}\PYG{p}{;}      
+            \PYG{n}{u} \PYG{o}{=} \PYG{n}{pre}\PYG{p}{[}\PYG{n}{u}\PYG{p}{];}\PYG{c+c1}{//回退      }
+        \PYG{p}{\PYGZcb{}}      
+    \PYG{p}{\PYGZcb{}}      
+          
+    \PYG{k}{return} \PYG{n}{flow}\PYG{p}{;}      
+\PYG{p}{\PYGZcb{}}      
+      
+\PYG{k+kt}{void} \PYG{n+nf}{init} \PYG{p}{()} \PYG{p}{\PYGZob{}}\PYG{c+c1}{//初始化      }
+    \PYG{n}{clear} \PYG{p}{(}\PYG{n}{adj}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{);}      
+    \PYG{n}{cntE} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}      
+\PYG{p}{\PYGZcb{}}      
+      
+\PYG{k+kt}{void} \PYG{n+nf}{work} \PYG{p}{()} \PYG{p}{\PYGZob{}}      
+    \PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,} \PYG{n}{v}\PYG{p}{,} \PYG{n}{c}\PYG{p}{;}      
+    \PYG{n}{init} \PYG{p}{();}      
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{m}\PYG{p}{;} \PYG{o}{++} \PYG{n}{i}\PYG{p}{)} \PYG{n}{scanf} \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}d\PYGZpc{}d\PYGZpc{}d\PYGZdq{}}\PYG{p}{,} \PYG{o}{\PYGZam{}}\PYG{n}{u}\PYG{p}{,} \PYG{o}{\PYGZam{}}\PYG{n}{v}\PYG{p}{,} \PYG{o}{\PYGZam{}}\PYG{n}{c}\PYG{p}{),} \PYG{n}{addedge} \PYG{p}{(}\PYG{n}{u}\PYG{p}{,} \PYG{n}{v}\PYG{p}{,} \PYG{n}{c}\PYG{p}{);}      
+    \PYG{n}{sourse} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{sink} \PYG{o}{=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{nv} \PYG{o}{=} \PYG{n}{sink} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}      
+    \PYG{n}{printf} \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}d}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{ISAP} \PYG{p}{());}      
+\PYG{p}{\PYGZcb{}}        
+\PYG{k+kt}{int} \PYG{n+nf}{main}\PYG{p}{()} \PYG{p}{\PYGZob{}}      
+    \PYG{k}{while} \PYG{p}{(}\PYG{o}{\PYGZti{}}\PYG{n}{scanf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}d\PYGZpc{}d\PYGZdq{}}\PYG{p}{,} \PYG{o}{\PYGZam{}}\PYG{n}{m}\PYG{p}{,} \PYG{o}{\PYGZam{}}\PYG{n}{n}\PYG{p}{))} \PYG{n}{work} \PYG{p}{();}      
+    \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}      
+\PYG{p}{\PYGZcb{}}    
+\end{Verbatim}

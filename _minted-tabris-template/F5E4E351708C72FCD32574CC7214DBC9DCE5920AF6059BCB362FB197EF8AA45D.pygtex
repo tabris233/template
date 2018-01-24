@@ -1,0 +1,62 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{queue}
+
+\PYG{c+c1}{// queue模版类的定义在\PYGZlt{}queue\PYGZgt{}头文件中. }
+\PYG{c+c1}{// queue与stack相似,queue模版类也需要两个模版参数,一个元素类型,一个容器类型,元素类型时必须的,容器类型时可选的,默认为deque类型.}
+
+\PYG{c+c1}{// 定义queue对象的示例代码必须如下:}
+\PYG{n}{queue}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{n}{q}\PYG{p}{;}
+\PYG{n}{queue}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}} \PYG{n}{qq}\PYG{p}{;}
+
+\PYG{c+c1}{// queue的基本操作:}
+
+\PYG{n}{q}\PYG{p}{.}\PYG{n}{push}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}  \PYG{c+c1}{//  入队列}
+\PYG{n}{q}\PYG{p}{.}\PYG{n}{pop}\PYG{p}{();}    \PYG{c+c1}{//  出队列}
+\PYG{n}{q}\PYG{p}{.}\PYG{n}{front}\PYG{p}{();}  \PYG{c+c1}{//  访问队首元素}
+\PYG{n}{q}\PYG{p}{.}\PYG{n}{back}\PYG{p}{();}   \PYG{c+c1}{//  访问队尾元素s}
+\PYG{n}{q}\PYG{p}{.}\PYG{n}{empty}\PYG{p}{();}  \PYG{c+c1}{//  判断队列是否为空}
+\PYG{n}{q}\PYG{p}{.}\PYG{n}{size}\PYG{p}{();}   \PYG{c+c1}{//  访问队列中的元素个数}
+
+\PYG{n}{priority\PYGZus{}queue}
+
+\PYG{c+c1}{// 在\PYGZlt{}queue\PYGZgt{}头文件中,还定义了另一个非常有用的模版类priority\PYGZus{}queue(优先队列).优先队列与队列的差别在于}
+\PYG{c+c1}{// 优先队列不是按照入队的顺序出队,而是按照队列中元素的优先权出队列(默认为大者优先,也可以通过指定算子}
+\PYG{c+c1}{// 来指定自己的优先顺序).}
+
+\PYG{c+c1}{// priority\PYGZus{}queue模版类有三个模版参数,第一个是元素类型,第二个是容器类型,第三个是比较算子.}
+\PYG{c+c1}{// 其中后两者都可以忽略,默认容器为vector,默认算子为less,即小的往前排,大的往后排(出队列时列尾元素先出队). }
+\PYG{c+c1}{// 定义priority\PYGZus{}queue对象的代码示例：}
+
+\PYG{n}{priority\PYGZus{}queue}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{n}{q}\PYG{p}{;}
+\PYG{n}{priority\PYGZus{}queue}\PYG{o}{\PYGZlt{}}\PYG{n}{pair}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{p}{,} \PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{o}{\PYGZgt{}} \PYG{n}{qq}\PYG{p}{;}                 \PYG{c+c1}{//  注意在两个尖括号之间一定要留空格,防止误判}
+\PYG{n}{priority\PYGZus{}queue}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{p}{,} \PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}}\PYG{p}{,} \PYG{n}{greater}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{o}{\PYGZgt{}} \PYG{n}{qqq}\PYG{p}{;}\PYG{c+c1}{//  定义小的先出队列}
+
+\PYG{c+c1}{// priority\PYGZus{}queue的基本操作与queue的略微不同.}
+
+\PYG{c+c1}{// priority\PYGZus{}queue的基本操作：}
+
+\PYG{n}{q}\PYG{p}{.}\PYG{n}{empty}\PYG{p}{()}     \PYG{c+c1}{//  如果队列为空,则返回true,否则返回false}
+\PYG{n}{q}\PYG{p}{.}\PYG{n}{size}\PYG{p}{()}      \PYG{c+c1}{//  返回队列中元素的个数}
+\PYG{n}{q}\PYG{p}{.}\PYG{n}{pop}\PYG{p}{()}       \PYG{c+c1}{//  删除队首元素,但不返回其值}
+\PYG{n}{q}\PYG{p}{.}\PYG{n}{top}\PYG{p}{()}       \PYG{c+c1}{//  返回具有最高优先级的元素值,但不删除该元素}
+\PYG{n}{q}\PYG{p}{.}\PYG{n}{push}\PYG{p}{(}\PYG{n}{item}\PYG{p}{)}  \PYG{c+c1}{//  在基于优先级的适当位置插入新元素}
+
+\PYG{c+c1}{// 初学者在使用priority\PYGZus{}queue时,最困难的可能就是如何定义比较算子了.}
+\PYG{c+c1}{// 如果是基本数据类型,或已定义了比较运算符的类,}
+\PYG{c+c1}{// 可以直接使用STL的less算子和greater算子——默认为使用less算子.}
+\PYG{c+c1}{// 如果要定义自己的比较算子,方法有多种,这里介绍其中一种：重载比较运算符.}
+\PYG{c+c1}{// 优先队列试图这两个元素x和y代入比较运算符(对于less算子,调用x \PYGZlt{} y,对于greater算子,调用x \PYGZgt{} y),}
+\PYG{c+c1}{// 若结果为真,则x排在y前面,y将先出队列,反之,则y排在x前面,x将先出队列. }
+\PYG{c+c1}{// 如下算子示例：}
+
+\PYG{k}{class} \PYG{n+nc}{T}\PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{z}\PYG{p}{;}
+\PYG{p}{\PYGZcb{};}
+
+\PYG{c+c1}{// 如果想要按照z的顺序从小到大出队列,只需要改动比较运算符重载为：}
+
+\PYG{k+kt}{bool} \PYG{k}{operator} \PYG{o}{\PYGZlt{}} \PYG{p}{(}\PYG{k}{const} \PYG{n}{T} \PYG{o}{\PYGZam{}}\PYG{n}{tOne}\PYG{p}{,} \PYG{k}{const} \PYG{n}{T} \PYG{o}{\PYGZam{}}\PYG{n}{tTwo}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{tOne}\PYG{p}{.}\PYG{n}{z} \PYG{o}{\PYGZgt{}} \PYG{n}{tTwo}\PYG{p}{.}\PYG{n}{z}\PYG{p}{;}  \PYG{c+c1}{//  按照z的顺序来决定tOne和tTwo的顺序}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+c1}{// 则会得到和第二个例子一样的结果,所以,决定算子的是比较运算符重载函数内部的返回值.}
+\end{Verbatim}

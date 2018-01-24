@@ -1,0 +1,59 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// 筛法求素数}
+
+\PYG{c+c1}{// 埃拉托斯特尼筛法}
+\PYG{k+kt}{void} \PYG{n+nf}{Prime}\PYG{p}{()\PYGZob{}}
+    \PYG{n}{memset}\PYG{p}{(}\PYG{n}{Or}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{Or}\PYG{p}{));}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{N}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{Or}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{==}\PYG{l+m+mi}{0}\PYG{p}{)\PYGZob{}}
+            \PYG{n}{p}\PYG{p}{[}\PYG{o}{++}\PYG{n}{p}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]]}\PYG{o}{=}\PYG{n}{i}\PYG{p}{;}
+            \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j}\PYG{o}{=}\PYG{n}{i}\PYG{o}{+}\PYG{n}{i}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZlt{}}\PYG{n}{N}\PYG{p}{;}\PYG{n}{j}\PYG{o}{+=}\PYG{n}{i}\PYG{p}{)}
+                \PYG{n}{Or}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// 线性筛}
+\PYG{k+kt}{int} \PYG{n}{prime}\PYG{p}{[}\PYG{l+m+mi}{20000}\PYG{p}{],}\PYG{n}{kp}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{k+kt}{int} \PYG{n}{Is\PYGZus{}or}\PYG{p}{[}\PYG{l+m+mi}{65536}\PYG{p}{];}
+\PYG{k+kt}{void} \PYG{n+nf}{Prime}\PYG{p}{()\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{n} \PYG{o}{=}\PYG{l+m+mi}{65536}\PYG{p}{;} \PYG{c+c1}{//2\PYGZti{}n之间的素数}
+    \PYG{n}{kp}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{n}{memset}\PYG{p}{(}\PYG{n}{Is\PYGZus{}or}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{Is\PYGZus{}or}\PYG{p}{));}
+    \PYG{n}{Is\PYGZus{}or}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{=}\PYG{n}{Is\PYGZus{}or}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{n}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{Is\PYGZus{}or}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}    \PYG{n}{prime}\PYG{p}{[}\PYG{n}{kp}\PYG{o}{++}\PYG{p}{]}\PYG{o}{=}\PYG{n}{i}\PYG{p}{;}
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZlt{}}\PYG{n}{kp}\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{n}{i}\PYG{o}{*}\PYG{n}{prime}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{\PYGZlt{}}\PYG{n}{n}\PYG{p}{;}\PYG{n}{j}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+            \PYG{n}{Is\PYGZus{}or}\PYG{p}{[}\PYG{n}{i}\PYG{o}{*}\PYG{n}{prime}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]]}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{i}\PYG{o}{\PYGZpc{}}\PYG{n}{prime}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{==}\PYG{l+m+mi}{0}\PYG{p}{)} \PYG{k}{break}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// 区间筛 hdu 6069}
+\PYG{c+c1}{// 给你1\PYGZlt{}=l\PYGZlt{}=r\PYGZlt{}=1e12,r\PYGZhy{}l\PYGZlt{}=1e6 ,问[l,r]区间有多少个素数}
+\PYG{k+kt}{void} \PYG{n+nf}{Prime}\PYG{p}{()\PYGZob{}}
+    \PYG{n}{kp} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{n}{memset}\PYG{p}{(}\PYG{n}{Is}\PYG{p}{,}\PYG{n+nb}{true}\PYG{p}{,}\PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{Is}\PYG{p}{));}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{N}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{Is}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])\PYGZob{}}
+            \PYG{n}{prime}\PYG{p}{[}\PYG{n}{kp}\PYG{o}{++}\PYG{p}{]}\PYG{o}{=}\PYG{n}{i}\PYG{p}{;}
+            \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j}\PYG{o}{=}\PYG{n}{i}\PYG{o}{+}\PYG{n}{i}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZlt{}}\PYG{n}{N}\PYG{p}{;}\PYG{n}{j}\PYG{o}{+=}\PYG{n}{i}\PYG{p}{)} \PYG{n}{Is}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+\PYG{c+c1}{//    printf(\PYGZdq{}kp = \PYGZpc{}d\PYGZbs{}n\PYGZdq{},kp);}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{void} \PYG{n+nf}{Prime2}\PYG{p}{(}\PYG{n}{LL} \PYG{n}{l}\PYG{p}{,}\PYG{n}{LL} \PYG{n}{r}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{memset}\PYG{p}{(}\PYG{n}{Is}\PYG{p}{,}\PYG{n+nb}{true}\PYG{p}{,}\PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{Is}\PYG{p}{));}
+    \PYG{k}{for}\PYG{p}{(}\PYG{n}{LL} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{b}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{kp}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{b}\PYG{o}{=}\PYG{n}{l}\PYG{o}{/}\PYG{n}{prime}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+        \PYG{k}{while}\PYG{p}{(}\PYG{n}{b}\PYG{o}{*}\PYG{n}{prime}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{\PYGZlt{}}\PYG{n}{l}\PYG{o}{||}\PYG{n}{b}\PYG{o}{\PYGZlt{}=}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{n}{b}\PYG{o}{++}\PYG{p}{;}
+        \PYG{k}{for}\PYG{p}{(}\PYG{n}{LL} \PYG{n}{j}\PYG{o}{=}\PYG{n}{b}\PYG{o}{*}\PYG{n}{prime}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}\PYG{n}{j}\PYG{o}{\PYGZlt{}=}\PYG{n}{r}\PYG{p}{;}\PYG{n}{j}\PYG{o}{+=}\PYG{n}{prime}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}\PYG{k}{if}\PYG{p}{(}\PYG{n}{j}\PYG{o}{\PYGZgt{}=}\PYG{l+m+mi}{1}\PYG{p}{)\PYGZob{}}
+            \PYG{n}{Is}\PYG{p}{[}\PYG{n}{j}\PYG{o}{\PYGZhy{}}\PYG{n}{l}\PYG{p}{]}\PYG{o}{=}\PYG{n+nb}{false}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{l}\PYG{o}{==}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{n}{Is}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{=}\PYG{n+nb}{false}\PYG{p}{;}
+    \PYG{k}{return} \PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

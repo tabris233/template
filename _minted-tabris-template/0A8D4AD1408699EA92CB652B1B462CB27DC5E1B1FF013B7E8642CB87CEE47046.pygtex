@@ -1,0 +1,28 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{bitset}
+
+\PYG{c+c1}{// 可以当作一个bool型数组考虑,bitset\PYGZlt{}N\PYGZgt{} bs;  可以考虑成一个数组bool bs[N]。}
+
+\PYG{c+c1}{// 相关操作：}
+
+\PYG{n}{bs}\PYG{p}{.}\PYG{n}{set}\PYG{p}{();}    \PYG{c+c1}{//全部置1,bs.reset()全部置0;}
+\PYG{n}{bs}\PYG{p}{.}\PYG{n}{set}\PYG{p}{(}\PYG{n}{pos}\PYG{p}{);} \PYG{c+c1}{//等价于bs[pos]=1,bs.reset(pos)等价于bs[pos]=0;}
+
+
+\PYG{c+c1}{// 最重点的来了,bitset\PYGZlt{}N\PYGZgt{} a, b;}
+
+\PYG{o}{!}\PYG{n}{a}                  \PYG{c+c1}{//按位取反  }
+\PYG{n}{a}\PYG{o}{\PYGZca{}}\PYG{n}{b}                 \PYG{c+c1}{//按位异或  }
+\PYG{n}{a}\PYG{o}{|}\PYG{n}{b}                 \PYG{c+c1}{//按位或  }
+\PYG{n}{a}\PYG{o}{\PYGZam{}}\PYG{n}{b}                 \PYG{c+c1}{//按位与  }
+\PYG{n}{a}\PYG{o}{=}\PYG{n}{b}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{3}              \PYG{c+c1}{//整体移位  }
+\PYG{n}{a}\PYG{p}{.}\PYG{n}{count}\PYG{p}{();}          \PYG{c+c1}{//a中1的个数  }
+
+\PYG{c+c1}{//bitset优化有什么用呢}
+
+\PYG{c+c1}{//如果有一个bool数组 a[N] 和b[N] 把每一个位异或的话,一定是}
+\PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{N}\PYG{p}{;} \PYG{o}{++}\PYG{n}{i}\PYG{p}{)} \PYG{n}{c}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZca{}} \PYG{n}{b}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}  
+
+\PYG{c+c1}{//但是如果用bitset直接a\PYGZca{}b的话,只需要O(N/机器字节数)}
+\PYG{c+c1}{//这样可以实现常数优化。}
+\end{Verbatim}

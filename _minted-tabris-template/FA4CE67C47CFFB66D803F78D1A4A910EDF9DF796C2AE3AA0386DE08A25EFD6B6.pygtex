@@ -1,0 +1,44 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/***}
+\PYG{c+cm}{Manacher 是一个能在O(n)的复杂度内解决字符串中最长回文子串的问题}
+
+\PYG{c+cm}{str  原字符串}
+\PYG{c+cm}{a    进行Manacher算法的为减轻编码难度改进的字符串}
+\PYG{c+cm}{p[i] 以a[i]为中心的回文串的半径(含a[i])}
+\PYG{c+cm}{id   最长回文子串的中心位置}
+\PYG{c+cm}{mx   id+p[id] 最长回文子串的左外边界。}
+
+\PYG{c+cm}{算法核心的部分}
+\PYG{c+cm}{if(mx \PYGZgt{} i) p[i] = (p[(id\PYGZlt{}\PYGZlt{}1)\PYGZhy{}i]\PYGZlt{}(mx\PYGZhy{}i))?p[(id\PYGZlt{}\PYGZlt{}1)\PYGZhy{}1]:(mx\PYGZhy{}i);}
+\PYG{c+cm}{else p[i]=1;}
+
+\PYG{c+cm}{首先我们知道对于一个字符串进行操作的时候，是从左到右依次进行的}
+\PYG{c+cm}{那么由于回文串的对称性，}
+\PYG{c+cm}{那么可以确定的是对于a[i]为中心的回文串的长度至少是在以这个最大的回文串中对称的那个位置为中心的回文串的长度,但只能确定的是在最大的回文串的那一部分中的长度,至于之外的就要一个个的匹配了}
+\PYG{c+cm}{*/}
+\PYG{c+cm}{/***}
+\PYG{c+cm}{id  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7}
+\PYG{c+cm}{a： \PYGZdl{} \PYGZsh{} 1 \PYGZsh{} 2 \PYGZsh{} 2 \PYGZsh{} 1 \PYGZsh{} 2 \PYGZsh{} 3 \PYGZsh{} 2 \PYGZsh{} 1 \PYGZsh{}}
+\PYG{c+cm}{p\PYGZus{}i 1 1 2 1 2 5 2 }
+\PYG{c+cm}{*/}
+\PYG{k+kt}{char} \PYG{n}{a}\PYG{p}{[}\PYG{n}{N}\PYG{p}{],}\PYG{n}{str}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{k+kt}{int} \PYG{n}{p}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{k+kt}{void} \PYG{n+nf}{Manacher}\PYG{p}{()\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{len}  \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{n}{a}\PYG{p}{[}\PYG{n}{len}\PYG{p}{]} \PYG{o}{=} \PYG{l+s+sc}{\PYGZsq{}\PYGZdl{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{a}\PYG{p}{[}\PYG{o}{++}\PYG{n}{len}\PYG{p}{]} \PYG{o}{=} \PYG{l+s+sc}{\PYGZsq{}\PYGZsh{}\PYGZsq{}}\PYG{p}{;}
+    \PYG{k+kt}{int} \PYG{n}{slen} \PYG{o}{=} \PYG{n}{strlen}\PYG{p}{(}\PYG{n}{str}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{n}{Rep}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{slen}\PYG{p}{)} \PYG{n}{a}\PYG{p}{[}\PYG{o}{++}\PYG{n}{len}\PYG{p}{]} \PYG{o}{=} \PYG{n}{str}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],}\PYG{n}{a}\PYG{p}{[}\PYG{o}{++}\PYG{n}{len}\PYG{p}{]} \PYG{o}{=} \PYG{l+s+sc}{\PYGZsq{}\PYGZsh{}\PYGZsq{}}\PYG{p}{;}
+
+    \PYG{n}{memset}\PYG{p}{(}\PYG{n}{p}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{p}\PYG{p}{));}
+    \PYG{k+kt}{int} \PYG{n}{id} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{mx} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{mxp} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{n}{Rep}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{len}\PYG{p}{)\PYGZob{}}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{mx} \PYG{o}{\PYGZgt{}} \PYG{n}{i}\PYG{p}{)} \PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{p}{(}\PYG{n}{p}\PYG{p}{[(}\PYG{n}{id}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{n}{i}\PYG{p}{]}\PYG{o}{\PYGZlt{}}\PYG{p}{(}\PYG{n}{mx}\PYG{o}{\PYGZhy{}}\PYG{n}{i}\PYG{p}{))}\PYG{o}{?}\PYG{n}{p}\PYG{p}{[(}\PYG{n}{id}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{n}{i}\PYG{p}{]}\PYG{o}{:}\PYG{p}{(}\PYG{n}{mx}\PYG{o}{\PYGZhy{}}\PYG{n}{i}\PYG{p}{);}
+        \PYG{k}{else} \PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{k}{while}\PYG{p}{(}\PYG{n}{i}\PYG{o}{\PYGZhy{}}\PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{\PYGZgt{}=}\PYG{l+m+mi}{0}\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{n}{i}\PYG{o}{+}\PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{\PYGZlt{}=}\PYG{n}{len}\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{o}{\PYGZhy{}}\PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]]}\PYG{o}{==}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{o}{+}\PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]])} \PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{++}\PYG{p}{;}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{+}\PYG{n}{i}\PYG{o}{\PYGZgt{}}\PYG{n}{mx}\PYG{p}{)} \PYG{n}{mx}\PYG{o}{=}\PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{+}\PYG{n}{i}\PYG{p}{,}\PYG{n}{id}\PYG{o}{=}\PYG{n}{i}\PYG{p}{;}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{n}{mxp}\PYG{p}{)} \PYG{n}{mxp} \PYG{o}{=} \PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}d}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{n}{mxp}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{);}
+    \PYG{k}{return} \PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

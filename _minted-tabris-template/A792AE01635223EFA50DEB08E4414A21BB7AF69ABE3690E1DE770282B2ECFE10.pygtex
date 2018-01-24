@@ -1,0 +1,32 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// set模版类的定义在头文件\PYGZlt{}set\PYGZgt{}中.}
+
+\PYG{c+c1}{// 定义set对象的示例代码如下：}
+
+\PYG{n}{set}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{n}{s}\PYG{p}{;}
+\PYG{n}{set}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{double}\PYG{o}{\PYGZgt{}} \PYG{n}{ss}\PYG{p}{;}
+
+\PYG{c+c1}{// set的基本操作：}
+
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{()}       \PYG{c+c1}{//  返回指向第一个元素的迭代器}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{clear}\PYG{p}{()}       \PYG{c+c1}{//  清除所有元素}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{count}\PYG{p}{()}       \PYG{c+c1}{//  返回某个值元素的个数}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{empty}\PYG{p}{()}       \PYG{c+c1}{//  如果集合为空,返回true(真)}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{end}\PYG{p}{()}         \PYG{c+c1}{//  返回指向最后一个元素之后的迭代器,不是最后一个元素}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{equal\PYGZus{}range}\PYG{p}{()} \PYG{c+c1}{//  返回集合中与给定值相等的上下限的两个迭代器}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{erase}\PYG{p}{()}       \PYG{c+c1}{//  删除集合中的元素}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{find}\PYG{p}{()}        \PYG{c+c1}{//  返回一个指向被查找到元素的迭代器}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{get\PYGZus{}allocator}\PYG{p}{()}   \PYG{c+c1}{//  返回集合的分配器}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{insert}\PYG{p}{()}      \PYG{c+c1}{//  在集合中插入元素}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{lower\PYGZus{}bound}\PYG{p}{()} \PYG{c+c1}{//  返回指向大于(或等于)某值的第一个元素的迭代器}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{key\PYGZus{}comp}\PYG{p}{()}    \PYG{c+c1}{//  返回一个用于元素间值比较的函数}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{max\PYGZus{}size}\PYG{p}{()}    \PYG{c+c1}{//  返回集合能容纳的元素的最大限值}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{rbegin}\PYG{p}{()}      \PYG{c+c1}{//  返回指向集合中最后一个元素的反向迭代器}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{rend}\PYG{p}{()}        \PYG{c+c1}{//  返回指向集合中第一个元素的反向迭代器}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{size}\PYG{p}{()}        \PYG{c+c1}{//  集合中元素的数目}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{swap}\PYG{p}{()}        \PYG{c+c1}{//  交换两个集合变量}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{upper\PYGZus{}bound}\PYG{p}{()} \PYG{c+c1}{//  返回大于某个值元素的迭代器}
+\PYG{n}{s}\PYG{p}{.}\PYG{n}{value\PYGZus{}comp}\PYG{p}{()}  \PYG{c+c1}{//  返回一个用于比较元素间的值的函数}
+
+\PYG{c+c1}{// multiset和set的基本操作相似,需要注意的是,集合的count()能返回0(无)或者1(有),而多重集合是有多少个返回多少个.}
+\end{Verbatim}

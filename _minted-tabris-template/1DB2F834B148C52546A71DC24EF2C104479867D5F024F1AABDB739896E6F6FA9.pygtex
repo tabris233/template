@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// 威佐夫博弈(Wythoff Game)：有两堆各若干个物品，}
+\PYG{c+c1}{// 两个人轮流从某一堆或同时从两堆中取同样多的物品，}
+\PYG{c+c1}{// 规定每次至少取一个，多者不限，最后取光者得胜。}
+
+\PYG{k+kt}{void} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{n}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{m}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{n}\PYG{o}{\PYGZlt{}}\PYG{n}{m}\PYG{p}{)}\PYG{n}{n}\PYG{o}{=}\PYG{n}{n}\PYG{o}{\PYGZca{}}\PYG{n}{m}\PYG{p}{,}\PYG{n}{m}\PYG{o}{=}\PYG{n}{m}\PYG{o}{\PYGZca{}}\PYG{n}{n}\PYG{p}{,}\PYG{n}{n}\PYG{o}{=}\PYG{n}{n}\PYG{o}{\PYGZca{}}\PYG{n}{m}\PYG{p}{;}
+    \PYG{k+kt}{int} \PYG{n}{k}\PYG{o}{=}\PYG{n}{n}\PYG{o}{\PYGZhy{}}\PYG{n}{m}\PYG{p}{;}
+    \PYG{n}{n}\PYG{o}{=}\PYG{p}{(}\PYG{k+kt}{int}\PYG{p}{)(}\PYG{n}{k}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{+}\PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{p}{))}\PYG{o}{/}\PYG{l+m+mf}{2.0}\PYG{p}{);}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{n}\PYG{o}{==}\PYG{n}{m}\PYG{p}{)} \PYG{n}{first} \PYG{n}{lose}\PYG{p}{;}
+    \PYG{k}{else} \PYG{n}{first} \PYG{n}{win}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// O(1)解决快速乘取膜}
+\PYG{n}{LLu} \PYG{n+nf}{qmodx}\PYG{p}{(}\PYG{n}{LLu} \PYG{n}{a}\PYG{p}{,}\PYG{n}{LLu} \PYG{n}{b}\PYG{p}{,}\PYG{n}{LLu} \PYG{n}{c}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{a}\PYG{o}{\PYGZpc{}=}\PYG{n}{c}\PYG{p}{,}\PYG{n}{b}\PYG{o}{\PYGZpc{}=}\PYG{n}{c}\PYG{p}{;}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{c}\PYG{o}{\PYGZlt{}=}\PYG{l+m+mi}{1000000000}\PYG{p}{)} \PYG{k}{return} \PYG{n}{a}\PYG{o}{*}\PYG{n}{b}\PYG{o}{\PYGZpc{}}\PYG{n}{c}\PYG{p}{;}
+    \PYG{k}{return} \PYG{p}{(}\PYG{n}{a}\PYG{o}{*}\PYG{n}{b}\PYG{o}{\PYGZhy{}}\PYG{p}{(}\PYG{n}{LLu}\PYG{p}{)(}\PYG{n}{a}\PYG{o}{/}\PYG{p}{(}\PYG{k+kt}{long} \PYG{k+kt}{double}\PYG{p}{)}\PYG{n}{c}\PYG{o}{*}\PYG{n}{b}\PYG{o}{+}\PYG{l+m+mf}{1e\PYGZhy{}8}\PYG{p}{)}\PYG{o}{*}\PYG{n}{c}\PYG{o}{+}\PYG{n}{c}\PYG{p}{)}\PYG{o}{\PYGZpc{}}\PYG{n}{c}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

@@ -1,0 +1,72 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/***********************************************}
+\PYG{c+cm}{用于快速求卷积c=a⊙b }
+\PYG{c+cm}{卷积可以类比两个多项式相乘 }
+\PYG{c+cm}{正常暴力求卷积的复杂度是O(n\PYGZca{}2) ,}
+\PYG{c+cm}{通过FFT加速 求卷积的复杂度能降到O(nlog\PYGZus{}\PYGZob{}2\PYGZcb{}n) }
+\PYG{c+cm}{注意FFT的长度必须为2\PYGZca{}k}
+\PYG{c+cm}{***********************************************/}
+\PYG{k}{struct} \PYG{n}{Complex}\PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{double} \PYG{n}{real}\PYG{p}{,} \PYG{n}{image}\PYG{p}{;}
+    \PYG{n}{Complex}\PYG{p}{(}\PYG{k+kt}{double} \PYG{n}{\PYGZus{}real}\PYG{p}{,} \PYG{k+kt}{double} \PYG{n}{\PYGZus{}image}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{real} \PYG{o}{=} \PYG{n}{\PYGZus{}real}\PYG{p}{;}
+        \PYG{n}{image} \PYG{o}{=} \PYG{n}{\PYGZus{}image}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{Complex}\PYG{p}{()\PYGZob{}\PYGZcb{}}
+
+    \PYG{n}{Complex} \PYG{k}{operator} \PYG{o}{+} \PYG{p}{(}\PYG{k}{const} \PYG{n}{Complex} \PYG{o}{\PYGZam{}}\PYG{n}{tmp}\PYG{p}{)\PYGZob{}}\PYG{k}{return} \PYG{n}{Complex}\PYG{p}{(}\PYG{n}{real} \PYG{o}{+} \PYG{n}{tmp}\PYG{p}{.}\PYG{n}{real}\PYG{p}{,} \PYG{n}{image} \PYG{o}{+} \PYG{n}{tmp}\PYG{p}{.}\PYG{n}{image}\PYG{p}{);\PYGZcb{}}
+    \PYG{n}{Complex} \PYG{k}{operator} \PYG{o}{\PYGZhy{}} \PYG{p}{(}\PYG{k}{const} \PYG{n}{Complex} \PYG{o}{\PYGZam{}}\PYG{n}{tmp}\PYG{p}{)\PYGZob{}}\PYG{k}{return} \PYG{n}{Complex}\PYG{p}{(}\PYG{n}{real} \PYG{o}{\PYGZhy{}} \PYG{n}{tmp}\PYG{p}{.}\PYG{n}{real}\PYG{p}{,} \PYG{n}{image} \PYG{o}{\PYGZhy{}} \PYG{n}{tmp}\PYG{p}{.}\PYG{n}{image}\PYG{p}{);\PYGZcb{}}
+    \PYG{n}{Complex} \PYG{k}{operator} \PYG{o}{*} \PYG{p}{(}\PYG{k}{const} \PYG{n}{Complex} \PYG{o}{\PYGZam{}}\PYG{n}{tmp}\PYG{p}{)\PYGZob{}}\PYG{k}{return} \PYG{n}{Complex}\PYG{p}{(}\PYG{n}{real}\PYG{o}{*}\PYG{n}{tmp}\PYG{p}{.}\PYG{n}{real} \PYG{o}{\PYGZhy{}} \PYG{n}{image}\PYG{o}{*}\PYG{n}{tmp}\PYG{p}{.}\PYG{n}{image}\PYG{p}{,} \PYG{n}{real}\PYG{o}{*}\PYG{n}{tmp}\PYG{p}{.}\PYG{n}{image} \PYG{o}{+} \PYG{n}{image}\PYG{o}{*}\PYG{n}{tmp}\PYG{p}{.}\PYG{n}{real}\PYG{p}{);\PYGZcb{}}
+\PYG{p}{\PYGZcb{};}
+\PYG{k+kt}{int} \PYG{n+nf}{rev}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{id}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{len}\PYG{p}{)\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{ret} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{p}{(}\PYG{l+m+mi}{1} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{i}\PYG{p}{)} \PYG{o}{\PYGZlt{}} \PYG{n}{len}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{ret} \PYG{o}{\PYGZlt{}\PYGZlt{}=} \PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{id} \PYG{o}{\PYGZam{}} \PYG{p}{(}\PYG{l+m+mi}{1} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{i}\PYG{p}{))} \PYG{n}{ret} \PYG{o}{|=} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n}{ret}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{n}{Complex} \PYG{n}{A}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{k+kt}{void} \PYG{n+nf}{FFT}\PYG{p}{(}\PYG{n}{Complex} \PYG{o}{*}\PYG{n}{a}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{len}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{DFT}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{len}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+        \PYG{n}{A}\PYG{p}{[}\PYG{n}{rev}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,} \PYG{n}{len}\PYG{p}{)]} \PYG{o}{=} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{s} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{p}{(}\PYG{l+m+mi}{1} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{s}\PYG{p}{)} \PYG{o}{\PYGZlt{}=} \PYG{n}{len}\PYG{p}{;} \PYG{n}{s}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{m} \PYG{o}{=} \PYG{p}{(}\PYG{l+m+mi}{1} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{s}\PYG{p}{);}
+        \PYG{n}{Complex} \PYG{n}{wm} \PYG{o}{=} \PYG{n}{Complex}\PYG{p}{(}\PYG{n}{cos}\PYG{p}{(}\PYG{n}{DFT}\PYG{o}{*}\PYG{l+m+mi}{2}\PYG{o}{*}\PYG{n}{PI}\PYG{o}{/}\PYG{n}{m}\PYG{p}{),} \PYG{n}{sin}\PYG{p}{(}\PYG{n}{DFT}\PYG{o}{*}\PYG{l+m+mi}{2}\PYG{o}{*}\PYG{n}{PI}\PYG{o}{/}\PYG{n}{m}\PYG{p}{));}
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{k} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{k} \PYG{o}{\PYGZlt{}} \PYG{n}{len}\PYG{p}{;} \PYG{n}{k} \PYG{o}{+=} \PYG{n}{m}\PYG{p}{)\PYGZob{}}
+            \PYG{n}{Complex} \PYG{n}{w} \PYG{o}{=} \PYG{n}{Complex}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{);}
+            \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}} \PYG{p}{(}\PYG{n}{m} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{l+m+mi}{1}\PYG{p}{);} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+                \PYG{n}{Complex} \PYG{n}{t} \PYG{o}{=} \PYG{n}{w}\PYG{o}{*}\PYG{n}{A}\PYG{p}{[}\PYG{n}{k} \PYG{o}{+} \PYG{n}{j} \PYG{o}{+} \PYG{p}{(}\PYG{n}{m} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{l+m+mi}{1}\PYG{p}{)];}
+                \PYG{n}{Complex} \PYG{n}{u} \PYG{o}{=} \PYG{n}{A}\PYG{p}{[}\PYG{n}{k} \PYG{o}{+} \PYG{n}{j}\PYG{p}{];}
+                \PYG{n}{A}\PYG{p}{[}\PYG{n}{k} \PYG{o}{+} \PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{n}{u} \PYG{o}{+} \PYG{n}{t}\PYG{p}{;}
+                \PYG{n}{A}\PYG{p}{[}\PYG{n}{k} \PYG{o}{+} \PYG{n}{j} \PYG{o}{+} \PYG{p}{(}\PYG{n}{m} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{l+m+mi}{1}\PYG{p}{)]} \PYG{o}{=} \PYG{n}{u} \PYG{o}{\PYGZhy{}} \PYG{n}{t}\PYG{p}{;}
+                \PYG{n}{w} \PYG{o}{=} \PYG{n}{w}\PYG{o}{*}\PYG{n}{wm}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{DFT} \PYG{o}{==} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{len}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{n}{A}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{real} \PYG{o}{/=} \PYG{n}{len}\PYG{p}{,} \PYG{n}{A}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{image} \PYG{o}{/=} \PYG{n}{len}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{len}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{A}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+    \PYG{k}{return}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{int} \PYG{n+nf}{main}\PYG{p}{()}
+\PYG{p}{\PYGZob{}}
+    \PYG{c+cm}{/**}
+\PYG{c+cm}{    求卷积c=a⊗b}
+\PYG{c+cm}{    la为a的长度}
+\PYG{c+cm}{    lb为b的长度}
+\PYG{c+cm}{    len为最后结果的长度.}
+\PYG{c+cm}{    **/}
+    \PYG{k+kt}{int} \PYG{n}{sa}\PYG{p}{,}\PYG{n}{sb}\PYG{p}{;}
+    \PYG{n}{sa}\PYG{o}{=}\PYG{n}{sb}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{while}\PYG{p}{((}\PYG{l+m+mi}{1}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{n}{sa}\PYG{p}{)}\PYG{o}{\PYGZlt{}}\PYG{n}{la}\PYG{p}{)} \PYG{n}{sa}\PYG{o}{++}\PYG{p}{;}
+    \PYG{k}{while}\PYG{p}{((}\PYG{l+m+mi}{1}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{n}{sb}\PYG{p}{)}\PYG{o}{\PYGZlt{}}\PYG{n}{lb}\PYG{p}{)} \PYG{n}{sb}\PYG{o}{++}\PYG{p}{;}
+    \PYG{k+kt}{int} \PYG{n}{len} \PYG{o}{=} \PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{p}{(}\PYG{n}{max}\PYG{p}{(}\PYG{n}{sa}\PYG{p}{,}\PYG{n}{sb}\PYG{p}{)}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{));}
+    \PYG{n}{A} \PYG{o}{=} \PYG{n}{FFT}\PYG{p}{(}\PYG{n}{A}\PYG{p}{,}\PYG{n}{len}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{);}
+    \PYG{n}{B} \PYG{o}{=} \PYG{n}{FFT}\PYG{p}{(}\PYG{n}{B}\PYG{p}{,}\PYG{n}{len}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{);}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{len}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)}  \PYG{n}{A}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{n}{A}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{*}\PYG{n}{B}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],}\PYG{n}{ans}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{n}{A} \PYG{o}{=} \PYG{n}{FFT}\PYG{p}{(}\PYG{n}{A}\PYG{p}{,}\PYG{n}{len}\PYG{p}{,}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{);}
+    \PYG{c+cm}{/**}
+\PYG{c+cm}{    这是最后的卷积的结果.}
+\PYG{c+cm}{    **/}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

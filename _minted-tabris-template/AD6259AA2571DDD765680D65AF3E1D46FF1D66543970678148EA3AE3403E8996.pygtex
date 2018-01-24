@@ -1,0 +1,34 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/****************************************************}
+\PYG{c+cm}{kruskal 适用于稀疏图，边数接近T(k*n)时采用 （k为常数}
+\PYG{c+cm}{****************************************************/}
+\PYG{k}{struct} \PYG{n}{node} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,}\PYG{n}{v}\PYG{p}{,}\PYG{n}{w}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}\PYG{n}{e}\PYG{p}{[}\PYG{n}{N}\PYG{o}{*}\PYG{l+m+mi}{4}\PYG{p}{];}
+\PYG{k+kt}{bool} \PYG{n+nf}{cmp}\PYG{p}{(}\PYG{n}{node} \PYG{n}{a}\PYG{p}{,}\PYG{n}{node} \PYG{n}{b}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{a}\PYG{p}{.}\PYG{n}{w}\PYG{o}{\PYGZgt{}}\PYG{n}{b}\PYG{p}{.}\PYG{n}{w}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{int} \PYG{n}{pre}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{k+kt}{int} \PYG{n+nf}{findi}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{r}\PYG{o}{=}\PYG{n}{x}\PYG{p}{;}
+    \PYG{k}{while}\PYG{p}{(}\PYG{n}{r}\PYG{o}{!=}\PYG{n}{pre}\PYG{p}{[}\PYG{n}{r}\PYG{p}{])}\PYG{n}{r}\PYG{o}{=}\PYG{n}{pre}\PYG{p}{[}\PYG{n}{r}\PYG{p}{];}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{n}{x}\PYG{p}{,}\PYG{n}{j}\PYG{p}{;}\PYG{n}{i}\PYG{o}{!=}\PYG{n}{r}\PYG{p}{;}\PYG{n}{i}\PYG{o}{=}\PYG{n}{j}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{j}\PYG{o}{=}\PYG{n}{pre}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+        \PYG{n}{pre}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{n}{r}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n}{r}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{void} \PYG{n+nf}{join}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{y}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{x}\PYG{o}{=}\PYG{n}{findi}\PYG{p}{(}\PYG{n}{x}\PYG{p}{),}\PYG{n}{y}\PYG{o}{=}\PYG{n}{findi}\PYG{p}{(}\PYG{n}{y}\PYG{p}{);}
+    \PYG{n}{pre}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]}\PYG{o}{=}\PYG{n}{y}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{void} \PYG{n+nf}{MST}\PYG{p}{()\PYGZob{}}
+    \PYG{n}{sort}\PYG{p}{(}\PYG{n}{e}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{e}\PYG{o}{+}\PYG{n}{m}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{cmp}\PYG{p}{);}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{sum}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{m}\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{n}{sum}\PYG{o}{\PYGZlt{}}\PYG{n}{n}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{findi}\PYG{p}{(}\PYG{n}{e}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{u}\PYG{p}{)}\PYG{o}{==}\PYG{n}{findi}\PYG{p}{(}\PYG{n}{e}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{v}\PYG{p}{))} \PYG{k}{continue}\PYG{p}{;}
+        \PYG{n}{join}\PYG{p}{(}\PYG{n}{e}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{u}\PYG{p}{,}\PYG{n}{e}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{v}\PYG{p}{);}
+        \PYG{n}{add}\PYG{p}{(}\PYG{n}{e}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{u}\PYG{p}{,}\PYG{n}{e}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{v}\PYG{p}{,}\PYG{n}{e}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{w}\PYG{p}{);}
+        \PYG{n}{sum}\PYG{o}{++}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

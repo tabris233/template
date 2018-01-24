@@ -1,0 +1,67 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{//****************************************************************}
+\PYG{c+c1}{// Miller\PYGZus{}Rabin 算法进行素数测试}
+\PYG{c+c1}{//速度快，而且可以判断 \PYGZlt{}2\PYGZca{}63的数}
+\PYG{c+c1}{//复杂度 O(slog³n)}
+\PYG{c+c1}{//****************************************************************}
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{S}\PYG{o}{=}\PYG{l+m+mi}{20}\PYG{p}{;}\PYG{c+c1}{//随机算法判定次数，S越大，判错概率越小}
+\PYG{c+c1}{//计算 (a*b)\PYGZpc{}c.   a,b都是long long的数，直接相乘可能溢出的}
+\PYG{c+c1}{//  a,b,c \PYGZlt{}2\PYGZca{}63}
+\PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n+nf}{mult\PYGZus{}mod}\PYG{p}{(}\PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{a}\PYG{p}{,}\PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{b}\PYG{p}{,}\PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{c}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{a}\PYG{o}{\PYGZpc{}=}\PYG{n}{c}\PYG{p}{;}\PYG{n}{b}\PYG{o}{\PYGZpc{}=}\PYG{n}{c}\PYG{p}{;}
+    \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{ret}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{while}\PYG{p}{(}\PYG{n}{b}\PYG{p}{)\PYGZob{}}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{b}\PYG{o}{\PYGZam{}}\PYG{l+m+mi}{1}\PYG{p}{)\PYGZob{}}\PYG{n}{ret}\PYG{o}{+=}\PYG{n}{a}\PYG{p}{;}\PYG{n}{ret}\PYG{o}{\PYGZpc{}=}\PYG{n}{c}\PYG{p}{;\PYGZcb{}}
+        \PYG{n}{a}\PYG{o}{\PYGZlt{}\PYGZlt{}=}\PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{a}\PYG{o}{\PYGZgt{}=}\PYG{n}{c}\PYG{p}{)}\PYG{n}{a}\PYG{o}{\PYGZpc{}=}\PYG{n}{c}\PYG{p}{;}
+        \PYG{n}{b}\PYG{o}{\PYGZgt{}\PYGZgt{}=}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n}{ret}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+c1}{//计算  x\PYGZca{}n \PYGZpc{}c}
+\PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n+nf}{pow\PYGZus{}mod}\PYG{p}{(}\PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{x}\PYG{p}{,}\PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{n}\PYG{p}{,}\PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{mod}\PYG{p}{)}\PYG{o}{//}\PYG{n}{x}\PYG{o}{\PYGZca{}}\PYG{n}{n}\PYG{o}{\PYGZpc{}}\PYG{n}{c}\PYG{p}{\PYGZob{}}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{n}\PYG{o}{==}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{k}{return} \PYG{n}{x}\PYG{o}{\PYGZpc{}}\PYG{n}{mod}\PYG{p}{;}
+    \PYG{n}{x}\PYG{o}{\PYGZpc{}=}\PYG{n}{mod}\PYG{p}{;}
+    \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{tmp}\PYG{o}{=}\PYG{n}{x}\PYG{p}{;}
+    \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{ret}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k}{while}\PYG{p}{(}\PYG{n}{n}\PYG{p}{)\PYGZob{}}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{n}\PYG{o}{\PYGZam{}}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{n}{ret}\PYG{o}{=}\PYG{n}{mult\PYGZus{}mod}\PYG{p}{(}\PYG{n}{ret}\PYG{p}{,}\PYG{n}{tmp}\PYG{p}{,}\PYG{n}{mod}\PYG{p}{);}
+        \PYG{n}{tmp}\PYG{o}{=}\PYG{n}{mult\PYGZus{}mod}\PYG{p}{(}\PYG{n}{tmp}\PYG{p}{,}\PYG{n}{tmp}\PYG{p}{,}\PYG{n}{mod}\PYG{p}{);}
+        \PYG{n}{n}\PYG{o}{\PYGZgt{}\PYGZgt{}=}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n}{ret}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//以a为基,n\PYGZhy{}1=x*2\PYGZca{}t      a\PYGZca{}(n\PYGZhy{}1)=1(mod n)  验证n是不是合数}
+\PYG{c+c1}{//一定是合数返回true,不一定返回false}
+\PYG{k+kt}{bool} \PYG{n+nf}{check}\PYG{p}{(}\PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{a}\PYG{p}{,}\PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{n}\PYG{p}{,}\PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{x}\PYG{p}{,}\PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{t}\PYG{p}{)\PYGZob{}}
+    \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{ret}\PYG{o}{=}\PYG{n}{pow\PYGZus{}mod}\PYG{p}{(}\PYG{n}{a}\PYG{p}{,}\PYG{n}{x}\PYG{p}{,}\PYG{n}{n}\PYG{p}{);}
+    \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{last}\PYG{o}{=}\PYG{n}{ret}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{t}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{ret}\PYG{o}{=}\PYG{n}{mult\PYGZus{}mod}\PYG{p}{(}\PYG{n}{ret}\PYG{p}{,}\PYG{n}{ret}\PYG{p}{,}\PYG{n}{n}\PYG{p}{);}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{ret}\PYG{o}{==}\PYG{l+m+mi}{1}\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{n}{last}\PYG{o}{!=}\PYG{l+m+mi}{1}\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{n}{last}\PYG{o}{!=}\PYG{n}{n}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{k}{return} \PYG{n+nb}{true}\PYG{p}{;}\PYG{c+c1}{//合数}
+        \PYG{n}{last}\PYG{o}{=}\PYG{n}{ret}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{ret}\PYG{o}{!=}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{k}{return} \PYG{n+nb}{true}\PYG{p}{;}
+    \PYG{k}{return} \PYG{n+nb}{false}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// Miller\PYGZus{}Rabin()算法素数判定}
+\PYG{c+c1}{//是素数返回true.(可能是伪素数，但概率极小)}
+\PYG{c+c1}{//合数返回false;}
+
+\PYG{k+kt}{bool} \PYG{n+nf}{Miller\PYGZus{}Rabin}\PYG{p}{(}\PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{n}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{n}\PYG{o}{\PYGZlt{}}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{k}{return} \PYG{n+nb}{false}\PYG{p}{;}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{n}\PYG{o}{==}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{k}{return} \PYG{n+nb}{true}\PYG{p}{;}
+    \PYG{k}{if}\PYG{p}{((}\PYG{n}{n}\PYG{o}{\PYGZam{}}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{==}\PYG{l+m+mi}{0}\PYG{p}{)} \PYG{k}{return} \PYG{n+nb}{false}\PYG{p}{;}\PYG{c+c1}{//偶数}
+    \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{x}\PYG{o}{=}\PYG{n}{n}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{t}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{while}\PYG{p}{((}\PYG{n}{x}\PYG{o}{\PYGZam{}}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{==}\PYG{l+m+mi}{0}\PYG{p}{)\PYGZob{}}\PYG{n}{x}\PYG{o}{\PYGZgt{}\PYGZgt{}=}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{t}\PYG{o}{++}\PYG{p}{;\PYGZcb{}}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{S}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{a}\PYG{o}{=}\PYG{n}{rand}\PYG{p}{()}\PYG{o}{\PYGZpc{}}\PYG{p}{(}\PYG{n}{n}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{c+c1}{//rand()需要stdlib.h头文件}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{check}\PYG{p}{(}\PYG{n}{a}\PYG{p}{,}\PYG{n}{n}\PYG{p}{,}\PYG{n}{x}\PYG{p}{,}\PYG{n}{t}\PYG{p}{))}
+            \PYG{k}{return} \PYG{n+nb}{false}\PYG{p}{;}\PYG{c+c1}{//合数}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n+nb}{true}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

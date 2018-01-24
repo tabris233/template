@@ -1,0 +1,30 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/****************************************}
+\PYG{c+cm}{线性基}
+
+\PYG{c+cm}{基：在线性代数中，基（也称为基底）是描述、刻画向量空间}
+\PYG{c+cm}{的基本工具。向量空间的基是它的一个特殊的子集，基的元素}
+\PYG{c+cm}{称为基向量。向量空间中任意一个元素，都可以唯一地表示成}
+\PYG{c+cm}{基向量的线性组合。如果基中元素个数有限，就称向量空间为}
+\PYG{c+cm}{有限维向量空间，将元素的个数称作向量空间的维数。}
+\PYG{c+cm}{同样的，线性基是一种特殊的基，它通常会在异或运算中出现，}
+\PYG{c+cm}{它的意义是：通过原集合S的某一个最小子集S1使得S1内元素相}
+\PYG{c+cm}{互异或得到的值域与原集合S相互异或得到的值域相同。}
+
+\PYG{c+cm}{性质 }
+\PYG{c+cm}{1. 线性基能相互异或得到原集合的所有相互异或得到的值。 }
+\PYG{c+cm}{2. 线性基是满足性质1的最小的集合 }
+\PYG{c+cm}{3. 线性基没有异或和为0的子集。}
+\PYG{c+cm}{****************************************/}
+\PYG{k+kt}{void} \PYG{n+nf}{Guass}\PYG{p}{()\PYGZob{}}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{sz}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j}\PYG{o}{=}\PYG{l+m+mi}{63}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZgt{}=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)}
+            \PYG{k}{if} \PYG{p}{((}\PYG{n}{A}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{n}{j}\PYG{p}{)}\PYG{o}{\PYGZam{}}\PYG{l+m+mi}{1}\PYG{p}{)\PYGZob{}}
+                \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{P}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])} \PYG{p}{\PYGZob{}}\PYG{n}{P}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{=}\PYG{n}{A}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];} \PYG{k}{break}\PYG{p}{;\PYGZcb{}}
+                \PYG{k}{else} \PYG{n}{A}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{\PYGZca{}=}\PYG{n}{P}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}
+            \PYG{p}{\PYGZcb{}}
+
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZlt{}=}\PYG{l+m+mi}{63}\PYG{p}{;}\PYG{n}{j}\PYG{o}{++}\PYG{p}{)} \PYG{k}{if} \PYG{p}{(}\PYG{n}{P}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])} \PYG{n}{r}\PYG{o}{++}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{n}{r为极大无关组的大小}
+\end{Verbatim}

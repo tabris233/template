@@ -1,0 +1,25 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/***************************************************}
+\PYG{c+cm}{第一类Stirling数}
+\PYG{c+cm}{定理：第一类Stirling数s(p,k)计数的是把p个对象排成k个非空循环排列的方法数。}
+\PYG{c+cm}{递推公式为：}
+\PYG{c+cm}{s(p,p)=1 (p\PYGZgt{}=0)  有p个人和p个圆圈，每个圆圈就只有一个人}
+\PYG{c+cm}{s(p,0)=0 (p\PYGZgt{}=1)  如果至少有1个人，那么任何的安排都至少包含一个圆圈}
+\PYG{c+cm}{s(p,k)=(p\PYGZhy{}1)*s(p\PYGZhy{}1,k)+s(p\PYGZhy{}1,k\PYGZhy{}1)}
+\PYG{c+cm}{***************************************************/}
+\PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{s}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{][}\PYG{n}{maxn}\PYG{p}{];}\PYG{c+c1}{//存放要求的第一类Stirling数  }
+\PYG{k}{const} \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{mod}\PYG{o}{=}\PYG{l+m+mf}{1e9}\PYG{o}{+}\PYG{l+m+mi}{7}\PYG{p}{;}\PYG{c+c1}{//取模  }
+  
+\PYG{k+kt}{void} \PYG{n+nf}{init}\PYG{p}{()}\PYG{c+c1}{//预处理  }
+\PYG{p}{\PYGZob{}}  
+    \PYG{n}{memset}\PYG{p}{(}\PYG{n}{s}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{s}\PYG{p}{));}  
+    \PYG{n}{s}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}  
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{maxn}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)}  
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZlt{}=}\PYG{n}{i}\PYG{p}{;}\PYG{n}{j}\PYG{o}{++}\PYG{p}{)}  
+    \PYG{p}{\PYGZob{}}  
+        \PYG{n}{s}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]}\PYG{o}{=}\PYG{n}{s}\PYG{p}{[}\PYG{n}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{n}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{+}\PYG{p}{(}\PYG{n}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{*}\PYG{n}{s}\PYG{p}{[}\PYG{n}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{n}{j}\PYG{p}{];}  
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{s}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]}\PYG{o}{\PYGZgt{}=}\PYG{n}{mod}\PYG{p}{)}  
+            \PYG{n}{s}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]}\PYG{o}{\PYGZpc{}=}\PYG{n}{mod}\PYG{p}{;}  
+    \PYG{p}{\PYGZcb{}}  
+\PYG{p}{\PYGZcb{}}  
+\end{Verbatim}

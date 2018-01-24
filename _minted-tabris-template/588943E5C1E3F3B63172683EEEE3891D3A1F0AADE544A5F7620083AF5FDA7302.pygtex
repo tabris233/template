@@ -1,0 +1,31 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{//邻接表 空间复杂度O(e+v)}
+\PYG{n}{vectorG}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}  \PYG{c+c1}{//G[i][j] 表示有一条i\PYGZhy{}\PYGZgt{}G[i][j]的有向边}
+\PYG{k+kt}{void} \PYG{n+nf}{add}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{v}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{G}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{push\PYGZus{}back}\PYG{p}{(}\PYG{n}{v}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{void} \PYG{n+nf}{dfs}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{f}\PYG{p}{)\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{gz}\PYG{o}{=}\PYG{n}{G}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{size}\PYG{p}{();}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{to}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{gz}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{to} \PYG{o}{=} \PYG{n}{G}\PYG{p}{[}\PYG{n}{u}\PYG{p}{][}\PYG{n}{i}\PYG{p}{];}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{to} \PYG{o}{==} \PYG{n}{f}\PYG{p}{)} \PYG{k}{continue}\PYG{p}{;}
+        \PYG{n}{dfs}\PYG{p}{(}\PYG{n}{to}\PYG{p}{,}\PYG{n}{u}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//前向星  空间复杂度O(e)}
+\PYG{k}{struct} \PYG{n}{edge}\PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{to}\PYG{p}{,}\PYG{n}{next}\PYG{p}{,}\PYG{n}{w}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}\PYG{n}{G}\PYG{p}{[}\PYG{n}{N}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{p}{];}
+\PYG{k+kt}{int} \PYG{n}{head}\PYG{p}{[}\PYG{n}{N}\PYG{p}{],}\PYG{n}{tot}\PYG{p}{;}
+\PYG{k+kt}{void} \PYG{n+nf}{add}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{v}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{w}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{G}\PYG{p}{[}\PYG{n}{tot}\PYG{p}{].}\PYG{n}{w}\PYG{o}{=}\PYG{n}{w}\PYG{p}{,}\PYG{n}{G}\PYG{p}{[}\PYG{n}{tot}\PYG{p}{].}\PYG{n}{to}\PYG{o}{=}\PYG{n}{v}\PYG{p}{,}\PYG{n}{G}\PYG{p}{[}\PYG{n}{tot}\PYG{p}{].}\PYG{n}{next}\PYG{o}{=}\PYG{n}{head}\PYG{p}{[}\PYG{n}{u}\PYG{p}{],}\PYG{n}{head}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]}\PYG{o}{=}\PYG{n}{tot}\PYG{o}{++}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{void} \PYG{n+nf}{dfs}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{f}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{n}{head}\PYG{p}{[}\PYG{n}{u}\PYG{p}{],}\PYG{n}{to}\PYG{p}{;}\PYG{n}{i}\PYG{o}{!=\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{i}\PYG{o}{=}\PYG{n}{G}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{next}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{to} \PYG{o}{=} \PYG{n}{G}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{to}\PYG{p}{;}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{to} \PYG{o}{==} \PYG{n}{f}\PYG{p}{)} \PYG{k}{continue}\PYG{p}{;}
+        \PYG{n}{dfs}\PYG{p}{(}\PYG{n}{to}\PYG{p}{,}\PYG{n}{u}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

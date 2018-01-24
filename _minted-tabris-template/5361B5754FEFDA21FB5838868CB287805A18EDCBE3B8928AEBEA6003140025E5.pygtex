@@ -1,0 +1,86 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/****************************************************}
+\PYG{c+cm}{Prim 适用于稠密图，边数达到/接近T(n\PYGZca{}2)时建议采用}
+\PYG{c+cm}{****************************************************/}
+
+\PYG{c+cp}{\PYGZsh{}define MAX 100}
+\PYG{c+cp}{\PYGZsh{}define MAXCOST 0x7fffffff}
+
+\PYG{k+kt}{int} \PYG{n}{graph}\PYG{p}{[}\PYG{n}{MAX}\PYG{p}{][}\PYG{n}{MAX}\PYG{p}{];}
+\PYG{k+kt}{int} \PYG{n+nf}{prim}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{graph}\PYG{p}{[][}\PYG{n}{MAX}\PYG{p}{],} \PYG{k+kt}{int} \PYG{n}{n}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{lowcost}\PYG{p}{[}\PYG{n}{MAX}\PYG{p}{];}
+    \PYG{k+kt}{int} \PYG{n}{mst}\PYG{p}{[}\PYG{n}{MAX}\PYG{p}{];}
+    \PYG{k+kt}{int} \PYG{n}{i}\PYG{p}{,} \PYG{n}{j}\PYG{p}{,} \PYG{n}{min}\PYG{p}{,} \PYG{n}{minid}\PYG{p}{,} \PYG{n}{sum} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{2}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{lowcost}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{graph}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{n}{i}\PYG{p}{];}
+        \PYG{n}{mst}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{mst}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{2}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{min} \PYG{o}{=} \PYG{n}{MAXCOST}\PYG{p}{;}
+        \PYG{n}{minid} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{2}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{lowcost}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{n}{min} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{lowcost}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{n}{min} \PYG{o}{=} \PYG{n}{lowcost}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}
+                \PYG{n}{minid} \PYG{o}{=} \PYG{n}{j}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{n}{cout} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s}{\PYGZdq{}V\PYGZdq{}} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{mst}\PYG{p}{[}\PYG{n}{minid}\PYG{p}{]} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s}{\PYGZdq{}\PYGZhy{}V\PYGZdq{}} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{minid} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s}{\PYGZdq{}=\PYGZdq{}} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{min} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{endl}\PYG{p}{;}
+        \PYG{n}{sum} \PYG{o}{+=} \PYG{n}{min}\PYG{p}{;}
+        \PYG{n}{lowcost}\PYG{p}{[}\PYG{n}{minid}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{2}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{graph}\PYG{p}{[}\PYG{n}{minid}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{n}{lowcost}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+                \PYG{n}{lowcost}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{n}{graph}\PYG{p}{[}\PYG{n}{minid}\PYG{p}{][}\PYG{n}{j}\PYG{p}{];}
+                \PYG{n}{mst}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{n}{minid}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n}{sum}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+cm}{/****}
+\PYG{c+cm}{带输出路径的prim}
+\PYG{c+cm}{****/}
+\PYG{k+kt}{double} \PYG{n}{map}\PYG{p}{[}\PYG{l+m+mi}{800}\PYG{p}{][}\PYG{l+m+mi}{800}\PYG{p}{];}  
+\PYG{k+kt}{double} \PYG{n}{weight}\PYG{p}{[}\PYG{l+m+mi}{1000}\PYG{p}{];}  
+\PYG{k+kt}{int} \PYG{n}{flag}\PYG{p}{[}\PYG{l+m+mi}{1000}\PYG{p}{];}  
+\PYG{k+kt}{void} \PYG{n+nf}{prim}\PYG{p}{()}  \PYG{p}{\PYGZob{}} 
+    \PYG{n}{memset}\PYG{p}{(}\PYG{n}{weight}\PYG{p}{,}\PYG{n}{INF}\PYG{p}{,}\PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{weight}\PYG{p}{));}  
+    \PYG{k+kt}{int} \PYG{n}{pos}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}  
+    \PYG{k+kt}{double} \PYG{n}{min\PYGZus{}weight}\PYG{p}{;}  
+    \PYG{k+kt}{int} \PYG{n}{p}\PYG{p}{;}  
+\PYG{c+c1}{//\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}表示遍历了第一个点\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}//  }
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{n}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}  
+        \PYG{n}{weight}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{n}{map}\PYG{p}{[}\PYG{n}{pos}\PYG{p}{][}\PYG{n}{i}\PYG{p}{];}  
+        \PYG{n}{flag}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{n}{pos}\PYG{p}{;}\PYG{c+c1}{//记录它的父亲节点  }
+    \PYG{p}{\PYGZcb{}}  
+    \PYG{n}{flag}\PYG{p}{[}\PYG{n}{pos}\PYG{p}{]}\PYG{o}{=\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}  
+\PYG{c+c1}{//\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}寻找最短的一截路\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}//  }
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{n}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}  
+        \PYG{n}{min\PYGZus{}weight}\PYG{o}{=}\PYG{n}{INF}\PYG{p}{;}  
+        \PYG{n}{p}\PYG{o}{=\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}  
+  
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZlt{}=}\PYG{n}{n}\PYG{p}{;}\PYG{n}{j}\PYG{o}{++}\PYG{p}{)\PYGZob{}}  
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{flag}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{!=\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{n}{min\PYGZus{}weight}\PYG{o}{\PYGZgt{}}\PYG{n}{weight}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])\PYGZob{}}  
+                \PYG{n}{min\PYGZus{}weight}\PYG{o}{=}\PYG{n}{weight}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}  
+                \PYG{n}{p}\PYG{o}{=}\PYG{n}{j}\PYG{p}{;}  
+            \PYG{p}{\PYGZcb{}}  
+        \PYG{p}{\PYGZcb{}}  
+\PYG{c+c1}{//\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}判断是否有短路到达\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}//  }
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{p}\PYG{o}{!=\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)\PYGZob{}}  
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{min\PYGZus{}weight}\PYG{o}{==}\PYG{l+m+mi}{0}\PYG{p}{)}  
+                \PYG{n}{flag}\PYG{p}{[}\PYG{n}{p}\PYG{p}{]}\PYG{o}{=\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}  
+            \PYG{k}{else}\PYG{p}{\PYGZob{}}  
+                \PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}d \PYGZpc{}d}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{n}{flag}\PYG{p}{[}\PYG{n}{p}\PYG{p}{],}\PYG{n}{p}\PYG{p}{);}  
+                \PYG{n}{flag}\PYG{p}{[}\PYG{n}{p}\PYG{p}{]}\PYG{o}{=\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}  
+            \PYG{p}{\PYGZcb{}}  
+        \PYG{p}{\PYGZcb{}}  
+\PYG{c+c1}{//\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}更新一截路\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}//  }
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZlt{}=}\PYG{n}{n}\PYG{p}{;}\PYG{n}{j}\PYG{o}{++}\PYG{p}{)}  
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{flag}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{!=\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{n}{weight}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{n}{map}\PYG{p}{[}\PYG{n}{p}\PYG{p}{][}\PYG{n}{j}\PYG{p}{])\PYGZob{}}  
+            \PYG{n}{weight}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{=}\PYG{n}{map}\PYG{p}{[}\PYG{n}{p}\PYG{p}{][}\PYG{n}{j}\PYG{p}{];}  
+            \PYG{n}{flag}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{=}\PYG{n}{p}\PYG{p}{;}  
+        \PYG{p}{\PYGZcb{}}  
+    \PYG{p}{\PYGZcb{}}  
+\PYG{p}{\PYGZcb{}}  
+\end{Verbatim}

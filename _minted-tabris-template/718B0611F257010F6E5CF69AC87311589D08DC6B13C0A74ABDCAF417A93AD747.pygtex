@@ -1,0 +1,47 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{BigInteger} \PYG{n}{or} \PYG{n}{BigDecimal}
+
+\PYG{n}{import} \PYG{n}{java}\PYG{p}{.}\PYG{n}{io}\PYG{p}{.}\PYG{o}{*}\PYG{p}{;}
+\PYG{n}{import} \PYG{n}{java}\PYG{p}{.}\PYG{n}{util}\PYG{p}{.}\PYG{o}{*}\PYG{p}{;}
+\PYG{n}{import} \PYG{n}{java}\PYG{p}{.}\PYG{n}{math}\PYG{p}{.}\PYG{n}{BigInteger}\PYG{p}{;}  
+\PYG{k}{public} \PYG{k}{class} \PYG{n+nc}{Main}\PYG{p}{\PYGZob{}}
+    \PYG{k}{public} \PYG{k}{static} \PYG{k+kt}{void} \PYG{n}{main}\PYG{p}{(}\PYG{n}{String} \PYG{n}{args}\PYG{p}{[])} \PYG{k}{throws} \PYG{n}{Exception} \PYG{p}{\PYGZob{}}
+        \PYG{n}{Scanner} \PYG{n}{cin}\PYG{o}{=}\PYG{k}{new} \PYG{n}{Scanner}\PYG{p}{(}\PYG{n}{System}\PYG{p}{.}\PYG{n}{in}\PYG{p}{);} \PYG{c+c1}{//输入}
+        \PYG{k+kt}{int} \PYG{n}{t}\PYG{p}{,}\PYG{n}{n}\PYG{p}{;}
+        \PYG{n}{n} \PYG{o}{=} \PYG{n}{cin}\PYG{p}{.}\PYG{n}{nextInt}\PYG{p}{();} \PYG{c+c1}{//整数输入}
+        \PYG{n}{System}\PYG{p}{.}\PYG{n}{out}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Case \PYGZsh{}\PYGZdq{}}\PYG{o}{+}\PYG{n}{cas}\PYG{o}{+}\PYG{l+s}{\PYGZdq{}: \PYGZdq{}}\PYG{o}{+}\PYG{n}{m}\PYG{p}{);} \PYG{c+c1}{//Java 输出}
+
+        \PYG{n}{BigInteger} \PYG{n}{a}\PYG{p}{;} \PYG{c+c1}{//大数声明 一}
+        \PYG{n}{BigInteger} \PYG{n}{b}\PYG{p}{;} \PYG{c+c1}{//大数声明 一}
+
+        \PYG{n}{BigInteger}\PYG{p}{.}\PYG{n}{valueOf}\PYG{p}{(}\PYG{n}{mod}\PYG{p}{)} \PYG{c+c1}{//大数声明 二  直接计算 ，类似C++强转 支持整型和string类型}
+        
+        \PYG{n}{cin}\PYG{p}{.}\PYG{n}{BigInteger}\PYG{p}{();}\PYG{c+c1}{//读入一个BigInteger;}
+
+        \PYG{c+c1}{//大数运算}
+        \PYG{n}{a}\PYG{p}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{b}\PYG{p}{)}    \PYG{c+c1}{//a+b;}
+        \PYG{n}{a}\PYG{p}{.}\PYG{n}{subtract}\PYG{p}{();} \PYG{c+c1}{//相减}
+        \PYG{n}{a}\PYG{p}{.}\PYG{n}{multiply}\PYG{p}{();} \PYG{c+c1}{//相乘}
+        \PYG{n}{a}\PYG{p}{.}\PYG{n}{divide}\PYG{p}{();}   \PYG{c+c1}{//相除取整}
+        \PYG{n}{a}\PYG{p}{.}\PYG{n}{remainder}\PYG{p}{();}\PYG{c+c1}{//取余}
+        \PYG{n}{a}\PYG{p}{.}\PYG{n}{pow}\PYG{p}{();}      \PYG{c+c1}{//a.pow(b)=a\PYGZca{}b}
+        \PYG{n}{a}\PYG{p}{.}\PYG{n}{gcd}\PYG{p}{();}      \PYG{c+c1}{//最大公约数}
+        \PYG{n}{a}\PYG{p}{.}\PYG{n}{abs}\PYG{p}{();}      \PYG{c+c1}{//绝对值 |a|}
+        \PYG{n}{a}\PYG{p}{.}\PYG{n}{negate}\PYG{p}{();}   \PYG{c+c1}{//取反数 \PYGZhy{}a}
+        \PYG{n}{a}\PYG{p}{.}\PYG{n}{mod}\PYG{p}{();}      \PYG{c+c1}{//a.mod(b)=a\PYGZpc{}b=a.remainder(b);}
+        \PYG{n}{max}\PYG{p}{();}\PYG{n}{min}\PYG{p}{();}  \PYG{c+c1}{//}
+        \PYG{k}{if}\PYG{p}{(} \PYG{n}{a}\PYG{p}{.}\PYG{n}{compareTo}\PYG{p}{(}\PYG{n}{b}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0} \PYG{p}{)} \PYG{n}{System}\PYG{p}{.}\PYG{n}{out}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}a == b\PYGZdq{}}\PYG{p}{);} \PYG{c+c1}{//大整数a==b}
+    \PYG{k}{else} \PYG{n+nf}{if}\PYG{p}{(} \PYG{n}{a}\PYG{p}{.}\PYG{n}{compareTo}\PYG{p}{(}\PYG{n}{b}\PYG{p}{)} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0} \PYG{p}{)} \PYG{n}{System}\PYG{p}{.}\PYG{n}{out}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}a \PYGZgt{} b\PYGZdq{}}\PYG{p}{);} \PYG{c+c1}{//大整数a\PYGZgt{}b}
+    \PYG{k}{else} \PYG{n+nf}{if}\PYG{p}{(} \PYG{n}{a}\PYG{p}{.}\PYG{n}{compareTo}\PYG{p}{(}\PYG{n}{b}\PYG{p}{)} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{0} \PYG{p}{)} \PYG{n}{System}\PYG{p}{.}\PYG{n}{out}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}a \PYGZlt{} b\PYGZdq{}}\PYG{p}{);} \PYG{c+c1}{//大整数a\PYGZlt{}b}
+        \PYG{n}{boolean} \PYG{n+nf}{equals}\PYG{p}{();} \PYG{c+c1}{//是否相等}
+        \PYG{c+c1}{//}
+        \PYG{n}{a}\PYG{p}{.}\PYG{n}{toString}\PYG{p}{()}  \PYG{c+c1}{// 转换为字符串}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{n}{BigDecimal} \PYG{c+c1}{//并且保留小数点后2位小数}
+\PYG{n}{DecimalFormat} \PYG{n}{df} \PYG{o}{=} \PYG{k}{new} \PYG{n}{DecimalFormat}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}0.00\PYGZdq{}}\PYG{p}{);} \PYG{c+c1}{// 保留几位小数}
+
+\PYG{n}{stripTrailingZeros}\PYG{p}{()} \PYG{c+c1}{//去掉小数末尾多余的0}
+\PYG{n}{toPlainString}\PYG{p}{()}      \PYG{c+c1}{//不会出现科学计数法的数}
+\end{Verbatim}

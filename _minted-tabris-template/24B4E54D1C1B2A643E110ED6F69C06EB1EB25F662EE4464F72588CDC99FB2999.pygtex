@@ -1,0 +1,158 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// 高斯消元(初等行列变换)}
+
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{MAXN}\PYG{o}{=}\PYG{l+m+mi}{50}\PYG{p}{;}
+\PYG{k+kt}{int} \PYG{n}{a}\PYG{p}{[}\PYG{n}{MAXN}\PYG{p}{][}\PYG{n}{MAXN}\PYG{p}{];}\PYG{c+c1}{//增广矩阵}
+\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{[}\PYG{n}{MAXN}\PYG{p}{];}\PYG{c+c1}{//解集}
+\PYG{k+kt}{bool} \PYG{n}{free\PYGZus{}x}\PYG{p}{[}\PYG{n}{MAXN}\PYG{p}{];}\PYG{c+c1}{//标记是否是不确定的变元}
+
+\PYG{k+kt}{void} \PYG{n+nf}{Debug}\PYG{p}{(}\PYG{k+kt}{void}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{j}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{equ}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}} \PYG{n}{var} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)}
+            \PYG{n}{cout} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s}{\PYGZdq{} \PYGZdq{}}\PYG{p}{;}
+        \PYG{n}{cout} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{endl}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}\PYG{n}{cout} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{endl}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kr}{inline} \PYG{k+kt}{int} \PYG{n+nf}{lcm}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{a}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{b}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{a}\PYG{o}{/}\PYG{n}{\PYGZus{}\PYGZus{}gcd}\PYG{p}{(}\PYG{n}{a}\PYG{p}{,}\PYG{n}{b}\PYG{p}{)}\PYG{o}{*}\PYG{n}{b}\PYG{p}{;}\PYG{c+c1}{//先除后乘防溢出}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// 高斯消元法解方程组(Gauss\PYGZhy{}Jordan elimination).(\PYGZhy{}2表示有浮点数解，但无整数解，}
+\PYG{c+c1}{//\PYGZhy{}1表示无解，0表示唯一解，大于0表示无穷解，并返回自由变元的个数)}
+\PYG{c+c1}{//有equ个方程，var个变元。增广矩阵行数为equ,分别为0到equ\PYGZhy{}1,列数为var+1,分别为0到var.}
+\PYG{k+kt}{int} \PYG{n+nf}{Gauss}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{equ}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{var}\PYG{p}{)\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{i}\PYG{p}{,}\PYG{n}{j}\PYG{p}{,}\PYG{n}{k}\PYG{p}{;}
+    \PYG{k+kt}{int} \PYG{n}{max\PYGZus{}r}\PYG{p}{;}\PYG{c+c1}{// 当前这列绝对值最大的行.}
+    \PYG{k+kt}{int} \PYG{n}{col}\PYG{p}{;}\PYG{c+c1}{//当前处理的列}
+    \PYG{k+kt}{int} \PYG{n}{ta}\PYG{p}{,}\PYG{n}{tb}\PYG{p}{;}
+    \PYG{k+kt}{int} \PYG{n}{LCM}\PYG{p}{;}
+    \PYG{k+kt}{int} \PYG{n}{temp}\PYG{p}{;}
+    \PYG{k+kt}{int} \PYG{n}{free\PYGZus{}x\PYGZus{}num}\PYG{p}{;}
+    \PYG{k+kt}{int} \PYG{n}{free\PYGZus{}index}\PYG{p}{;}
+
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{var}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{n}{free\PYGZus{}x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{n+nb}{true}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+
+    \PYG{c+c1}{//转换为阶梯阵.}
+    \PYG{n}{col}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;} \PYG{c+c1}{// 当前处理的列}
+    \PYG{k}{for}\PYG{p}{(}\PYG{n}{k} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{k} \PYG{o}{\PYGZlt{}} \PYG{n}{equ} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{col} \PYG{o}{\PYGZlt{}} \PYG{n}{var}\PYG{p}{;}\PYG{n}{k}\PYG{o}{++}\PYG{p}{,}\PYG{n}{col}\PYG{o}{++}\PYG{p}{)}
+    \PYG{p}{\PYGZob{}}\PYG{c+c1}{// 枚举当前处理的行.}
+\PYG{c+c1}{// 找到该col列元素绝对值最大的那行与第k行交换.(为了在除法时减小误差)}
+        \PYG{n}{max\PYGZus{}r}\PYG{o}{=}\PYG{n}{k}\PYG{p}{;}
+        \PYG{k}{for}\PYG{p}{(}\PYG{n}{i}\PYG{o}{=}\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{equ}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{col}\PYG{p}{])}\PYG{o}{\PYGZgt{}}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{max\PYGZus{}r}\PYG{p}{][}\PYG{n}{col}\PYG{p}{]))} \PYG{n}{max\PYGZus{}r}\PYG{o}{=}\PYG{n}{i}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{max\PYGZus{}r}\PYG{o}{!=}\PYG{n}{k}\PYG{p}{)\PYGZob{}}\PYG{c+c1}{// 与第k行交换.}
+            \PYG{k}{for}\PYG{p}{(}\PYG{n}{j}\PYG{o}{=}\PYG{n}{k}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZlt{}}\PYG{n}{var}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{j}\PYG{o}{++}\PYG{p}{)} \PYG{n}{swap}\PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{n}{j}\PYG{p}{],}\PYG{n}{a}\PYG{p}{[}\PYG{n}{max\PYGZus{}r}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]);}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{n}{col}\PYG{p}{]}\PYG{o}{==}\PYG{l+m+mi}{0}\PYG{p}{)\PYGZob{}}\PYG{c+c1}{// 说明该col列第k行以下全是0了，则处理当前行的下一列.}
+            \PYG{n}{k}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{;} \PYG{k}{continue}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{for}\PYG{p}{(}\PYG{n}{i}\PYG{o}{=}\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{equ}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}\PYG{c+c1}{// 枚举要删去的行.}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{col}\PYG{p}{]}\PYG{o}{!=}\PYG{l+m+mi}{0}\PYG{p}{)\PYGZob{}}
+                \PYG{n}{LCM} \PYG{o}{=} \PYG{n}{lcm}\PYG{p}{(}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{col}\PYG{p}{]),}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{n}{col}\PYG{p}{]));}
+                \PYG{n}{ta} \PYG{o}{=} \PYG{n}{LCM}\PYG{o}{/}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{col}\PYG{p}{]);}
+                \PYG{n}{tb} \PYG{o}{=} \PYG{n}{LCM}\PYG{o}{/}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{n}{col}\PYG{p}{]);}
+                \PYG{k}{if}\PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{col}\PYG{p}{]}\PYG{o}{*}\PYG{n}{a}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{n}{col}\PYG{p}{]}\PYG{o}{\PYGZlt{}}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{n}{tb}\PYG{o}{=\PYGZhy{}}\PYG{n}{tb}\PYG{p}{;}\PYG{c+c1}{//异号的情况是相加}
+                \PYG{k}{for}\PYG{p}{(}\PYG{n}{j}\PYG{o}{=}\PYG{n}{col}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZlt{}}\PYG{n}{var}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{j}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+                    \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]}\PYG{o}{*}\PYG{n}{ta}\PYG{o}{\PYGZhy{}}\PYG{n}{a}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]}\PYG{o}{*}\PYG{n}{tb}\PYG{p}{;}
+                \PYG{p}{\PYGZcb{}}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+
+  \PYG{c+c1}{//  Debug();}
+
+    \PYG{c+c1}{// 1. 无解的情况: 化简的增广阵中存在(0, 0, ..., a)这样的行(a != 0).}
+    \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{n}{k}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{equ}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+    \PYG{p}{\PYGZob{}} \PYG{c+c1}{// 对于无穷解来说，如果要判断哪些是自由变元，那么初等行变换中的交换就会影响，则要记录交换.}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{col}\PYG{p}{]} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{k}{return} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// 2. 无穷解的情况: 在var * (var + 1)的增广阵中出现(0, 0, ..., 0)这样的行，即说明没有形成严格的上三角阵.}
+    \PYG{c+c1}{// 且出现的行数即为自由变元的个数.}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{k} \PYG{o}{\PYGZlt{}} \PYG{n}{var}\PYG{p}{)\PYGZob{}}
+        \PYG{c+c1}{// 首先，自由变元有var \PYGZhy{} k个，即不确定的变元至少有var \PYGZhy{} k个.}
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{n}{k} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)\PYGZob{}}
+            \PYG{c+c1}{// 第i行一定不会是(0, 0, ..., 0)的情况，因为这样的行是在第k行到第equ行.}
+            \PYG{c+c1}{// 同样，第i行一定不会是(0, 0, ..., a), a != 0的情况，这样的无解的.}
+            \PYG{n}{free\PYGZus{}x\PYGZus{}num} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{c+c1}{// 用于判断该行中的不确定的变元的个数，如果超过1个，则无法求解，它们仍然为不确定的变元.}
+            \PYG{k}{for} \PYG{p}{(}\PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}} \PYG{n}{var}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+                \PYG{k}{if} \PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{!=} \PYG{l+m+mi}{0} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{free\PYGZus{}x}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])} \PYG{n}{free\PYGZus{}x\PYGZus{}num}\PYG{o}{++}\PYG{p}{,} \PYG{n}{free\PYGZus{}index} \PYG{o}{=} \PYG{n}{j}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{free\PYGZus{}x\PYGZus{}num} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{k}{continue}\PYG{p}{;} \PYG{c+c1}{// 无法求解出确定的变元.}
+            \PYG{c+c1}{// 说明就只有一个不确定的变元free\PYGZus{}index，那么可以求解出该变元，且该变元是确定的.}
+            \PYG{n}{temp} \PYG{o}{=} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{var}\PYG{p}{];}
+            \PYG{k}{for} \PYG{p}{(}\PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}} \PYG{n}{var}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+                \PYG{k}{if} \PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{!=} \PYG{l+m+mi}{0} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{j} \PYG{o}{!=} \PYG{n}{free\PYGZus{}index}\PYG{p}{)} \PYG{n}{temp} \PYG{o}{\PYGZhy{}=} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{*} \PYG{n}{x}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}
+            \PYG{p}{\PYGZcb{}}
+            \PYG{n}{x}\PYG{p}{[}\PYG{n}{free\PYGZus{}index}\PYG{p}{]} \PYG{o}{=} \PYG{n}{temp} \PYG{o}{/} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{free\PYGZus{}index}\PYG{p}{];} \PYG{c+c1}{// 求出该变元.}
+            \PYG{n}{free\PYGZus{}x}\PYG{p}{[}\PYG{n}{free\PYGZus{}index}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{c+c1}{// 该变元是确定的.}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{return} \PYG{n}{var} \PYG{o}{\PYGZhy{}} \PYG{n}{k}\PYG{p}{;} \PYG{c+c1}{// 自由变元有var \PYGZhy{} k个.}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// 3. 唯一解的情况: 在var * (var + 1)的增广阵中形成严格的上三角阵.}
+    \PYG{c+c1}{// 计算出Xn\PYGZhy{}1, Xn\PYGZhy{}2 ... X0.}
+    \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{n}{var} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{temp} \PYG{o}{=} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{var}\PYG{p}{];}
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{j} \PYG{o}{=} \PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}} \PYG{n}{var}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{n}{temp} \PYG{o}{\PYGZhy{}=} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{*} \PYG{n}{x}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{temp} \PYG{o}{\PYGZpc{}} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{i}\PYG{p}{]} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{k}{return} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{p}{;} \PYG{c+c1}{// 说明有浮点数解，但无整数解.}
+        \PYG{n}{x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{temp} \PYG{o}{/} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{i}\PYG{p}{];}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{int} \PYG{n+nf}{main}\PYG{p}{(}\PYG{k+kt}{void}\PYG{p}{)\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{i}\PYG{p}{,} \PYG{n}{j}\PYG{p}{;}
+    \PYG{k+kt}{int} \PYG{n}{equ}\PYG{p}{,}\PYG{n}{var}\PYG{p}{;}
+    \PYG{k}{while} \PYG{p}{(}\PYG{n}{scanf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}d \PYGZpc{}d\PYGZdq{}}\PYG{p}{,} \PYG{o}{\PYGZam{}}\PYG{n}{equ}\PYG{p}{,} \PYG{o}{\PYGZam{}}\PYG{n}{var}\PYG{p}{)} \PYG{o}{!=} \PYG{n}{EOF}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{memset}\PYG{p}{(}\PYG{n}{a}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{a}\PYG{p}{));}
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{equ}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+            \PYG{k}{for} \PYG{p}{(}\PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}} \PYG{n}{var} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)}
+                \PYG{n}{scanf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}d\PYGZdq{}}\PYG{p}{,} \PYG{o}{\PYGZam{}}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]);}
+\PYG{c+c1}{//        Debug();}
+        \PYG{k+kt}{int} \PYG{n}{free\PYGZus{}num} \PYG{o}{=} \PYG{n}{Gauss}\PYG{p}{(}\PYG{n}{equ}\PYG{p}{,}\PYG{n}{var}\PYG{p}{);}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{free\PYGZus{}num} \PYG{o}{==} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}无解!}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{);}
+        \PYG{k}{else} \PYG{k}{if} \PYG{p}{(}\PYG{n}{free\PYGZus{}num} \PYG{o}{==} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{p}{)} \PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}有浮点数解，无整数解!}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{);}
+        \PYG{k}{else} \PYG{k}{if} \PYG{p}{(}\PYG{n}{free\PYGZus{}num} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{)\PYGZob{}}
+            \PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}无穷多解! 自由变元个数为\PYGZpc{}d}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{free\PYGZus{}num}\PYG{p}{);}
+            \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{var}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+                \PYG{k}{if} \PYG{p}{(}\PYG{n}{free\PYGZus{}x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}x\PYGZpc{}d 是不确定的}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{);}
+                \PYG{k}{else} \PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}x\PYGZpc{}d: \PYGZpc{}d}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]);}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}} \PYG{k}{else} \PYG{p}{\PYGZob{}}
+            \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{var}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+                \PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}x\PYGZpc{}d: \PYGZpc{}d}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]);}
+        \PYG{p}{\PYGZcb{}}\PYG{n}{puts}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZdq{}}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+
+\PYG{c+c1}{// 异或消元}
+
+\PYG{c+c1}{// g[][]为01矩阵}
+\PYG{c+c1}{// 求解自由元个数}
+
+\PYG{n}{LL}  \PYG{n}{g}\PYG{p}{[}\PYG{l+m+mi}{333}\PYG{p}{][}\PYG{l+m+mi}{333}\PYG{p}{];}
+\PYG{k+kt}{int} \PYG{n+nf}{Gauss}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{n}\PYG{p}{)\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{i}\PYG{p}{,} \PYG{n}{j}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{c}\PYG{p}{,} \PYG{n}{cnt}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{n}{c} \PYG{o}{=} \PYG{n}{cnt} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{c} \PYG{o}{\PYGZlt{}} \PYG{n}{n}\PYG{p}{;} \PYG{n}{c}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{r} \PYG{o}{=} \PYG{n}{cnt}\PYG{p}{;} \PYG{n}{r} \PYG{o}{\PYGZlt{}} \PYG{n}{weishu}\PYG{p}{;} \PYG{n}{r}\PYG{o}{++}\PYG{p}{)}\PYG{k}{if} \PYG{p}{(}\PYG{n}{g}\PYG{p}{[}\PYG{n}{r}\PYG{p}{][}\PYG{n}{c}\PYG{p}{])}\PYG{k}{break}\PYG{p}{;}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{r} \PYG{o}{\PYGZlt{}} \PYG{n}{weishu}\PYG{p}{)\PYGZob{}}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{r} \PYG{o}{!=} \PYG{n}{cnt}\PYG{p}{)\PYGZob{}}
+                \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}  \PYG{n}{swap}\PYG{p}{(}\PYG{n}{g}\PYG{p}{[}\PYG{n}{r}\PYG{p}{][}\PYG{n}{i}\PYG{p}{],}\PYG{n}{g}\PYG{p}{[}\PYG{n}{cnt}\PYG{p}{][}\PYG{n}{i}\PYG{p}{]);}
+            \PYG{p}{\PYGZcb{}}
+            \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{n}{cnt} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{weishu}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}\PYG{k}{if}\PYG{p}{(}\PYG{n}{g}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{c}\PYG{p}{])\PYGZob{}}
+                \PYG{k}{for}\PYG{p}{(}\PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}} \PYG{n}{n}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)}
+                    \PYG{n}{g}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{\PYGZca{}=} \PYG{n}{g}\PYG{p}{[}\PYG{n}{cnt}\PYG{p}{][}\PYG{n}{j}\PYG{p}{];}
+            \PYG{p}{\PYGZcb{}}
+            \PYG{n}{cnt}\PYG{o}{++}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n}{n} \PYG{o}{\PYGZhy{}} \PYG{n}{cnt}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

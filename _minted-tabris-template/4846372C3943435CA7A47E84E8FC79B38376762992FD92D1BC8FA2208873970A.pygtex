@@ -1,0 +1,44 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// Sqrt()计算}
+\PYG{k+kt}{int} \PYG{n+nf}{mobius}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{n}\PYG{p}{)\PYGZob{}}
+	\PYG{k+kt}{int} \PYG{n}{m} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+	\PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{;}\PYG{n}{i}\PYG{o}{*}\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{n}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+		\PYG{k}{if}\PYG{p}{(}\PYG{n}{n}\PYG{o}{\PYGZpc{}}\PYG{n}{i}\PYG{o}{==}\PYG{l+m+mi}{0}\PYG{p}{)\PYGZob{}}
+			\PYG{n}{m}\PYG{o}{*=\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}
+			\PYG{k+kt}{int} \PYG{n}{k} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+			\PYG{n}{n}\PYG{o}{/=}\PYG{n}{i}\PYG{p}{;}
+			\PYG{k}{if}\PYG{p}{(}\PYG{n}{n}\PYG{o}{\PYGZpc{}}\PYG{n}{i}\PYG{o}{==}\PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}\PYG{n}{m}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{k}{break}\PYG{p}{;\PYGZcb{}}\PYG{c+c1}{//某个素因子的幂大于1}
+		\PYG{p}{\PYGZcb{}}
+	\PYG{p}{\PYGZcb{}}
+	\PYG{k}{if}\PYG{p}{(}\PYG{n}{n}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{n}{m} \PYG{o}{*=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}
+	\PYG{k}{return} \PYG{n}{m}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+c1}{// 普通筛法 求莫比乌斯函数}
+\PYG{k+kt}{void} \PYG{n+nf}{mubius}\PYG{p}{()\PYGZob{}}
+    \PYG{n}{mu}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{n}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j}\PYG{o}{=}\PYG{n}{i}\PYG{o}{+}\PYG{n}{i}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZlt{}=}\PYG{n}{n}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+            \PYG{n}{mu}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{\PYGZhy{}=}\PYG{n}{mu}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// 线性筛法预处理mobius函数}
+\PYG{k+kt}{int} \PYG{n}{prime}\PYG{p}{[}\PYG{n}{N}\PYG{p}{],}\PYG{n}{kp}\PYG{p}{;}
+\PYG{k+kt}{int} \PYG{n}{Is\PYGZus{}or}\PYG{p}{[}\PYG{n}{N}\PYG{p}{],}\PYG{n}{mu}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+
+\PYG{k+kt}{void} \PYG{n+nf}{Prime}\PYG{p}{()\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{;}
+    \PYG{n}{mu}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{n}{memset}\PYG{p}{(}\PYG{n}{Is\PYGZus{}or}\PYG{p}{,}\PYG{n+nb}{true}\PYG{p}{,}\PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{Is\PYGZus{}or}\PYG{p}{));}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{n}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{Is\PYGZus{}or}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{n}{prime}\PYG{p}{[}\PYG{n}{kp}\PYG{o}{++}\PYG{p}{]}\PYG{o}{=}\PYG{n}{i}\PYG{p}{,}\PYG{n}{mu}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{j}\PYG{o}{\PYGZlt{}}\PYG{n}{kp}\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{n}{i}\PYG{o}{*}\PYG{n}{prime}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{\PYGZlt{}=}\PYG{n}{n}\PYG{p}{;}\PYG{n}{j}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+            \PYG{n}{x} \PYG{o}{=} \PYG{n}{i}\PYG{o}{*}\PYG{n}{prime}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}
+            \PYG{n}{Is\PYGZus{}or}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]}\PYG{o}{=}\PYG{n+nb}{false}\PYG{p}{;}
+            \PYG{k}{if}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{o}{==}\PYG{n}{i}\PYG{o}{\PYGZpc{}}\PYG{n}{prime}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])} \PYG{k}{break}\PYG{p}{;}
+            \PYG{n}{mu}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{n}{mu}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

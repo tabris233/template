@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kt}{void} \PYG{n+nf}{margesort}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{a}\PYG{p}{[],}\PYG{k+kt}{int} \PYG{n}{f}\PYG{p}{[],}\PYG{k+kt}{int} \PYG{n}{p}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{r}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{p}\PYG{o}{==}\PYG{n}{r}\PYG{p}{)} \PYG{p}{\PYGZob{}}\PYG{n}{f}\PYG{p}{[}\PYG{n}{p}\PYG{p}{]}\PYG{o}{=}\PYG{n}{a}\PYG{p}{[}\PYG{n}{r}\PYG{p}{];}\PYG{k}{return} \PYG{p}{;\PYGZcb{}}
+    \PYG{k+kt}{int} \PYG{n}{mid} \PYG{o}{=} \PYG{p}{(}\PYG{n}{p}\PYG{o}{+}\PYG{n}{r}\PYG{p}{)}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{n}{margesort}\PYG{p}{(}\PYG{n}{a}\PYG{p}{,}\PYG{n}{f}\PYG{p}{,}\PYG{n}{p}\PYG{p}{,}\PYG{n}{mid}\PYG{p}{);}
+    \PYG{n}{margesort}\PYG{p}{(}\PYG{n}{a}\PYG{p}{,}\PYG{n}{f}\PYG{p}{,}\PYG{n}{mid}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{r}\PYG{p}{);}
+
+    \PYG{k+kt}{int} \PYG{n}{l1}\PYG{o}{=}\PYG{n}{p}\PYG{p}{,}\PYG{n}{l2}\PYG{o}{=}\PYG{n}{mid}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{n}{p}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{r}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{l1}\PYG{o}{\PYGZlt{}=}\PYG{n}{mid}\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{n}{l2}\PYG{o}{\PYGZlt{}=}\PYG{n}{r}\PYG{p}{)\PYGZob{}}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{l1}\PYG{p}{]}\PYG{o}{\PYGZlt{}}\PYG{n}{a}\PYG{p}{[}\PYG{n}{l2}\PYG{p}{])} \PYG{n}{f}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{n}{a}\PYG{p}{[}\PYG{n}{l1}\PYG{o}{++}\PYG{p}{];}
+            \PYG{k}{else} \PYG{n}{f}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{n}{a}\PYG{p}{[}\PYG{n}{l2}\PYG{o}{++}\PYG{p}{];}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{else} \PYG{k}{if}\PYG{p}{(}\PYG{n}{l1}\PYG{o}{\PYGZlt{}=}\PYG{n}{mid}\PYG{p}{)}   \PYG{n}{f}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{n}{a}\PYG{p}{[}\PYG{n}{l1}\PYG{o}{++}\PYG{p}{];}
+        \PYG{k}{else} \PYG{k}{if}\PYG{p}{(}\PYG{n}{l2}\PYG{o}{\PYGZlt{}=}\PYG{n}{r}\PYG{p}{)}     \PYG{n}{f}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{n}{a}\PYG{p}{[}\PYG{n}{l2}\PYG{o}{++}\PYG{p}{];}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{n}{p}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}=}\PYG{n}{r}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{n}{f}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+    \PYG{k}{return} \PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
