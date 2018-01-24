@@ -62,7 +62,8 @@ void initrmq(int n,int b[]) {
 
 int lcp(int x,int y) {
     x=Rank[x],y=Rank[y];
-    if(x>y) swap(x,y); x++;
+    if(x>y) swap(x,y);
+    x++;
     int k=mm[y-x+1];
     return min(dp[x][k],dp[y-(1<<k)+1][k]);
 }
