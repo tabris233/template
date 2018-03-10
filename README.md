@@ -17,6 +17,105 @@ tex studio 编辑
 
 >个别处会有BUG!!! 下学期无聊的时候会改过来.
 
+对你们有用的目录及文件
+```
+├── ComputationalGeometry
+│   ├── 2-d.cc
+│   └── 3-d.cc
+├── Date_structure
+│   ├── BIT.cc
+│   ├── Chair_tree.cc
+│   ├── dfs_order.cc
+│   ├── Heavy_light_Decomposition.cc
+│   ├── KD-tree.cc
+│   ├── lct.cc
+│   ├── Leftist-Tree.cc
+│   ├── Segment_tree.cc
+│   ├── SparseTable.cc
+│   ├── Splay.cc
+│   └── UFS.cc
+├── Graph
+│   ├── base.cc
+│   ├── Bipartite_Graph.cc
+│   ├── centre_of_gravity_of_tree.cc
+│   ├── dijkstra.cc
+│   ├── dinic.cc
+│   ├── isap.cc
+│   ├── kruskal.cc
+│   ├── lca.cc
+│   ├── Prim.cc
+│   ├── SPFA.cc
+│   ├── Strongly_Connected.cc
+│   ├── Topological-Sorting.cc
+│   └── Two-set.cc
+├── Math
+│   ├── Bell.cc
+│   ├── Catalan.cc
+│   ├── C(n,m).cc
+│   ├── CRT.cc
+│   ├── Euler.cc
+│   ├── exgcd.cc
+│   ├── Fast-Exponentiation-Mod.cc
+│   ├── Fast-Multi.cc
+│   ├── Fast-Sqrt.cc
+│   ├── FFT.cc
+│   ├── function-of-Congruence.cc
+│   ├── Fundamental-Theorem-of-Arithmetic.cc
+│   ├── FWT.cc
+│   ├── Guass.cc
+│   ├── inverse.cc
+│   ├── linear-basis.cc
+│   ├── lucas.cc
+│   ├── Matrix.cc
+│   ├── Meissel-Lehmer.cc
+│   ├── miller-rabbin.cc
+│   ├── mobius.cc
+│   ├── NTT.cc
+│   ├── Pascal-Triangle.cc
+│   ├── pollard_rho.cc
+│   ├── Primitive-Root.cc
+│   ├── rongchi.cc
+│   ├── SG.cc
+│   ├── sieve.cc
+│   ├── Stirling-number-one.cc
+│   ├── Stirling-number-two.cc
+│   └── Wythoff.cc
+├── Other
+│   ├── bignumber-c++.cc
+│   ├── bignumber-java.cc
+│   ├── Cantor-expension.cc
+│   ├── cdq-divide.cc
+│   ├── edge-divide.cc
+│   ├── fastio.cc
+│   ├── Fread.cc
+│   ├── normal-divide-2.cc
+│   ├── normal-divide.cc
+│   ├── point-divide.cc
+│   ├── polynomial-gcd.cc
+│   ├── stack.cc
+│   └── StringHash.CC
+├── STL
+│   ├── bitset.cc
+│   ├── Hashmap.cc
+│   ├── map.cc
+│   ├── multiset.cc
+│   ├── queue.cc
+│   └── set.cc
+├── String
+│   ├── Aho-Corasick_Auto_Mation.cc
+│   ├── KMP.cc
+│   ├── Manachar.cc
+│   ├── Suffix_Arrays.cc
+│   ├── Suffix_Auto_Mation.cc
+│   ├── suffix-automaton.cc
+│   └── Trie.cc
+├── tabris-template.pdf
+├── tabris-template.tex
+├── kactl_90.pdf
+├── kactl.pdf
+```
+
+
 ## Contents
 ### I Graph Theory 1
 #### 1 Basement. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
