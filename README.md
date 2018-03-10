@@ -2,6 +2,9 @@
 
 >这是由tabris整理的竞赛算法模板。以基础内容为主。没有深层次模板适用于初学者。
 
+>根目录下tabris-template.pdf为模板的pdf版本的模板文件
+＞根目录tabris-template.tex为Latex代码
+
 >本次模板整理采用latex。借鉴[palayutmd的博客](https://www.cnblogs.com/palayutm/p/6444833.html)进行整理.
 编译环境为texlive2017.
 tex studio 编辑
